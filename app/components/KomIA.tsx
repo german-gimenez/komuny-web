@@ -115,9 +115,11 @@ export default function KomIA() {
     <>
       {/* Trigger button — centered pill */}
       {!isOpen && (
-        <div style={{ position: 'fixed', bottom: '1.5rem', left: '50%', transform: 'translateX(-50%)', zIndex: 200 }}>
+        <div style={{ position: 'fixed', bottom: '1.5rem', left: '50%', transform: 'translateX(-50%)', zIndex: 9999 }}>
           <motion.button
             onClick={() => setIsOpen(true)}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
             whileHover={{ scale: 1.04 }}
             whileTap={{ scale: 0.96 }}
             aria-label="Abrir KomIA"
@@ -160,12 +162,13 @@ export default function KomIA() {
                 position: 'fixed',
                 inset: 0,
                 background: 'rgba(26,18,8,0.35)',
-                zIndex: 199,
+                zIndex: 9998,
               }}
             />
 
             {/* Drawer */}
             <motion.div
+              className="komia-drawer"
               initial={{ x: '100%' }}
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
@@ -175,10 +178,10 @@ export default function KomIA() {
                 top: 0,
                 right: 0,
                 width: '380px',
-                maxWidth: '100vw',
+                maxWidth: '100%',
                 height: '100dvh',
                 background: 'var(--bg)',
-                zIndex: 200,
+                zIndex: 9999,
                 display: 'flex',
                 flexDirection: 'column',
                 boxShadow: '-4px 0 32px rgba(26,18,8,0.12)',

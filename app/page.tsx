@@ -93,16 +93,16 @@ export default function Home() {
   return (
     <main>
       {/* NAV */}
-      <nav style={{ position: 'sticky', top: 0, zIndex: 100, background: 'rgba(245,240,232,0.92)', backdropFilter: 'blur(12px)', borderBottom: '1px solid var(--border)', padding: '0 2rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: '60px' }}>
+      <nav className="site-nav" style={{ position: 'sticky', top: 0, zIndex: 100, background: 'rgba(245,240,232,0.92)', backdropFilter: 'blur(12px)', borderBottom: '1px solid var(--border)', padding: '0 2rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: '60px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
           <img src="/favicon.jpg" alt="Komuny" style={{ width: '28px', height: '28px', borderRadius: '6px', objectFit: 'cover' }} />
           <span style={{ fontFamily: 'Fraunces, serif', fontWeight: 700, fontSize: '1.1rem', whiteSpace: 'nowrap' }}>Komuny Edu</span>
         </div>
-        <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+        <div className="nav-links" style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
           <a href="#glosario" style={{ fontSize: '0.88rem', color: 'var(--ink-muted)', textDecoration: 'none', padding: '0.3rem 0.7rem' }}>Glosario</a>
-          <a href="#recursos" style={{ fontSize: '0.88rem', color: 'var(--ink-muted)', textDecoration: 'none', padding: '0.3rem 0.7rem' }}>Recursos</a>
-          <a href="https://github.com/german-gimenez/komuny" target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.85rem', textDecoration: 'none', background: 'var(--ink)', color: 'var(--bg)', padding: '0.35rem 0.9rem', borderRadius: '20px', fontWeight: 500 }}>
-            <GitFork size={14} /> GitHub
+          <a href="#recursos" className="nav-recursos" style={{ fontSize: '0.88rem', color: 'var(--ink-muted)', textDecoration: 'none', padding: '0.3rem 0.7rem' }}>Recursos</a>
+          <a href="https://github.com/german-gimenez/komuny" target="_blank" rel="noopener noreferrer" className="nav-github" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.85rem', textDecoration: 'none', background: 'var(--ink)', color: 'var(--bg)', padding: '0.35rem 0.9rem', borderRadius: '20px', fontWeight: 500 }}>
+            <GitFork size={14} /> <span className="nav-github-text">GitHub</span>
           </a>
           <div className="nav-socials" style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
             <div style={{ width: '1px', height: '18px', background: 'var(--border)', margin: '0 0.25rem' }} />
@@ -265,7 +265,7 @@ export default function Home() {
       </footer>
 
       <style>{`
-        body { overflow-x: hidden; }
+        html, body { overflow-x: hidden; max-width: 100vw; }
         .term-card { background: var(--bg-warm); border: 1.5px solid var(--border); border-radius: 12px; padding: 1.1rem 1.25rem; transition: border-color 0.15s, box-shadow 0.15s; }
         .term-card:hover { border-color: var(--accent-light); box-shadow: 0 2px 12px rgba(212,98,42,0.08); }
         input:focus { border-color: var(--accent) !important; box-shadow: 0 0 0 3px rgba(212,98,42,0.1); }
@@ -278,7 +278,12 @@ export default function Home() {
         .hero-ctas { justify-content: flex-start; }
         @media (max-width: 1024px) { .hero-grid { gap: 2.5rem; padding: 5rem 2.5rem; } }
         @media (max-width: 768px) {
+          .site-nav { padding: 0 1rem !important; gap: 0.25rem; }
           .nav-socials { display: none !important; }
+          .nav-links { gap: 0.25rem !important; }
+          .nav-links a { font-size: 0.8rem !important; padding: 0.25rem 0.5rem !important; }
+          .nav-github { padding: 0.3rem 0.6rem !important; font-size: 0.78rem !important; }
+          .nav-github-text { display: none; }
           .hero-grid { grid-template-columns: 1fr; padding: 3rem 1.25rem 2rem; gap: 0; min-height: unset; }
           .hero-left { text-align: center; max-width: 100%; }
           .hero-h1 { font-size: 2rem; }
@@ -288,6 +293,8 @@ export default function Home() {
           .hero-ctas a { width: 100%; max-width: 260px; justify-content: center; }
         }
         @media (max-width: 480px) {
+          .site-nav { padding: 0 0.75rem !important; }
+          .nav-recursos { display: none !important; }
           .hero-h1 { font-size: 1.75rem; }
           .hero-right { height: 240px; }
           .hero-stats { gap: 1rem !important; }
