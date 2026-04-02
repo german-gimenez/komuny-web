@@ -125,7 +125,8 @@ export default function Home() {
               </div>
             </motion.div>
             <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.1 }} style={{ fontSize: 'clamp(2.4rem, 5vw, 4.8rem)', fontWeight: 700, letterSpacing: '-0.02em', marginBottom: '1.5rem', lineHeight: 1.12 }}>
-              IA para <TextFlip />,<br /><em style={{ fontStyle: 'italic', fontWeight: 300, color: 'var(--accent)' }}>sin barreras.</em>
+              <span style={{ display: 'block' }}>IA para <TextFlip />,</span>
+              <em style={{ fontStyle: 'italic', fontWeight: 300, color: 'var(--accent)' }}>sin barreras.</em>
             </motion.h1>
             <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.2 }} style={{ fontSize: '1.1rem', color: 'var(--ink-muted)', maxWidth: '480px', marginBottom: '2.5rem', lineHeight: 1.7 }}>
               Recursos practicos, abiertos y colaborativos para educadores que quieren integrar inteligencia artificial en el aula.

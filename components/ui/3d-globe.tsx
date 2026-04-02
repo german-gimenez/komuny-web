@@ -59,21 +59,20 @@ const ATM_FRAG = `
 `;
 
 function Earth({ bumpScale = 5 }: { bumpScale?: number }) {
-  const meshRef = useRef<THREE.Mesh>(null);
   const [colorMap, bumpMap] = useLoader(THREE.TextureLoader, [
-    'https://unpkg.com/three-globe@2.33.0/example/img/earth-blue-marble.jpg',
-    'https://unpkg.com/three-globe@2.33.0/example/img/earth-topology.png',
+    '/textures/earth.jpg',
+    '/textures/earth-bump.jpg',
   ]);
 
   return (
-    <mesh ref={meshRef} renderOrder={0}>
+    <mesh>
       <sphereGeometry args={[RADIUS, 64, 64]} />
       <meshPhongMaterial
         map={colorMap}
         bumpMap={bumpMap}
-        bumpScale={bumpScale * 0.001}
-        shininess={12}
-        specular={new THREE.Color(0x333333)}
+        bumpScale={bumpScale * 0.0008}
+        shininess={10}
+        specular={new THREE.Color(0x222222)}
       />
     </mesh>
   );
@@ -87,14 +86,14 @@ function Atmosphere({
   intensity?: number;
 }) {
   return (
-    <mesh renderOrder={1}>
+    <mesh>
       <sphereGeometry args={[RADIUS * 1.18, 32, 32]} />
       <shaderMaterial
         vertexShader={ATM_VERT}
         fragmentShader={ATM_FRAG}
         uniforms={{
           uColor: { value: new THREE.Color(color) },
-          uIntensity: { value: Math.max(1, intensity * 0.1) },
+          uIntensity: { value: Math.max(0.5, intensity * 0.1) },
         }}
         side={THREE.BackSide}
         blending={THREE.AdditiveBlending}
@@ -119,7 +118,7 @@ function MarkerPoint({
 
   return (
     <group position={[pos.x, pos.y, pos.z]}>
-      <Html center distanceFactor={8} zIndexRange={[10, 0]} style={{ pointerEvents: 'auto' }}>
+      <Html center distanceFactor={6} zIndexRange={[100, 0]} style={{ pointerEvents: 'auto' }}>
         <div
           onClick={() => onClick?.(marker)}
           onMouseEnter={() => { setHovered(true); onHover?.(marker); }}
@@ -128,29 +127,21 @@ function MarkerPoint({
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            gap: '3px',
             cursor: 'pointer',
-            transform: 'translateY(-50%)',
+            gap: '0',
           }}
         >
-          {/* Spike line */}
-          <div style={{
-            width: '1px',
-            height: '14px',
-            background: 'rgba(255,255,255,0.6)',
-            marginBottom: '1px',
-          }} />
           {/* Avatar */}
           <div style={{
-            width: '28px',
-            height: '28px',
+            width: '26px',
+            height: '26px',
             borderRadius: '50%',
-            border: `2px solid ${hovered ? '#fff' : 'rgba(255,255,255,0.7)'}`,
+            border: `2px solid ${hovered ? '#fff' : 'rgba(255,255,255,0.75)'}`,
             overflow: 'hidden',
-            boxShadow: '0 2px 10px rgba(0,0,0,0.5)',
-            transition: 'transform 0.18s ease, border-color 0.18s ease',
-            transform: hovered ? 'scale(1.25)' : 'scale(1)',
-            background: 'rgba(0,0,0,0.3)',
+            boxShadow: '0 2px 8px rgba(0,0,0,0.55)',
+            transition: 'transform 0.18s ease',
+            transform: hovered ? 'scale(1.22)' : 'scale(1)',
+            background: '#1a1a2e',
             flexShrink: 0,
           }}>
             <img
@@ -159,20 +150,27 @@ function MarkerPoint({
               style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
             />
           </div>
+          {/* Spike */}
+          <div style={{
+            width: '1.5px',
+            height: '12px',
+            background: 'rgba(255,255,255,0.55)',
+          }} />
           {/* Tooltip */}
           {hovered && (
             <div style={{
-              background: 'rgba(0,0,0,0.82)',
+              position: 'absolute',
+              top: '-28px',
+              background: 'rgba(0,0,0,0.85)',
               color: '#fff',
               fontSize: '10px',
               fontFamily: 'DM Sans, sans-serif',
               fontWeight: 500,
-              padding: '3px 7px',
-              borderRadius: '5px',
+              padding: '2px 7px',
+              borderRadius: '4px',
               whiteSpace: 'nowrap',
               backdropFilter: 'blur(6px)',
-              border: '1px solid rgba(255,255,255,0.12)',
-              marginTop: '2px',
+              border: '1px solid rgba(255,255,255,0.15)',
             }}>
               {marker.label}
             </div>
@@ -203,9 +201,9 @@ function GlobeScene({
 
   return (
     <>
-      <ambientLight intensity={0.4} />
+      <ambientLight intensity={0.5} />
       <directionalLight position={[5, 3, 5]} intensity={1.8} />
-      <directionalLight position={[-5, -2, -3]} intensity={0.15} color="#aaddff" />
+      <directionalLight position={[-3, -1, -3]} intensity={0.12} color="#aaccff" />
       <Suspense fallback={null}>
         <Earth bumpScale={bumpScale} />
         <Atmosphere color={atmosphereColor} intensity={atmosphereIntensity} />
@@ -240,8 +238,9 @@ export function Globe3D({
   return (
     <div className={cn('w-full h-full', className)} style={{ background: 'transparent' }}>
       <Canvas
-        camera={{ position: [0, 0.5, 4], fov: 40 }}
+        camera={{ position: [0, 0.3, 4.2], fov: 38 }}
         gl={{ antialias: true, alpha: true }}
+        onCreated={({ gl }) => { gl.setClearColor(0x000000, 0); }}
         style={{ background: 'transparent' }}
       >
         <GlobeScene
