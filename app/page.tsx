@@ -1,9 +1,20 @@
 'use client';
 import { useState } from 'react';
+import dynamic from 'next/dynamic';
 import { motion, AnimatePresence } from 'framer-motion';
 import { BookOpen, Cpu, FileText, GraduationCap, Star, ArrowRight, GitFork, Search, X, Lightbulb, AlertCircle, ChevronDown, Globe } from 'lucide-react';
 import { glossaryTerms, letters, tagColors, GlossaryTerm } from './data/glossary';
 import KomIA from './components/KomIA';
+import TextFlip from './components/TextFlip';
+
+const Globe3D = dynamic(() => import('./components/Globe3D'), {
+  ssr: false,
+  loading: () => (
+    <div style={{ width: '100%', height: '100%', background: 'radial-gradient(circle, var(--accent-pale) 30%, transparent 80%)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <div style={{ width: '60%', height: '60%', borderRadius: '50%', background: 'var(--accent-pale)', border: '1px solid var(--accent-light)' }} />
+    </div>
+  ),
+});
 
 const tagLabels: Record<string, string> = {
   fundamental: 'Fundamental',
@@ -101,40 +112,55 @@ export default function Home() {
       </nav>
 
       {/* HERO */}
-      <section style={{ minHeight: '88vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '4rem 2rem 6rem', position: 'relative', overflow: 'hidden', textAlign: 'center' }}>
-        <div style={{ position: 'absolute', top: '-10%', right: '-5%', width: '500px', height: '500px', background: 'radial-gradient(circle, rgba(212,98,42,0.08) 0%, transparent 70%)', borderRadius: '50%', pointerEvents: 'none' }} />
-        <div style={{ position: 'absolute', bottom: '0', left: '-10%', width: '400px', height: '400px', background: 'radial-gradient(circle, rgba(58,107,74,0.07) 0%, transparent 70%)', borderRadius: '50%', pointerEvents: 'none' }} />
-        <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: 'var(--accent-pale)', border: '1px solid var(--accent-light)', padding: '0.35rem 1rem', borderRadius: '20px', marginBottom: '2rem' }}>
-            <Star size={13} color="var(--accent)" fill="var(--accent)" />
-            <span style={{ fontSize: '0.82rem', color: 'var(--accent)', fontWeight: 600, letterSpacing: '0.05em' }}>OPEN SOURCE - PARA LATAM</span>
+      <section style={{ position: 'relative', overflow: 'hidden' }}>
+        <div style={{ position: 'absolute', top: '-10%', right: '0', width: '600px', height: '600px', background: 'radial-gradient(circle, rgba(212,98,42,0.07) 0%, transparent 70%)', borderRadius: '50%', pointerEvents: 'none' }} />
+        <div style={{ position: 'absolute', bottom: '0', left: '-10%', width: '400px', height: '400px', background: 'radial-gradient(circle, rgba(58,107,74,0.06) 0%, transparent 70%)', borderRadius: '50%', pointerEvents: 'none' }} />
+        <div className="hero-grid">
+          {/* LEFT */}
+          <div className="hero-left">
+            <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
+              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: 'var(--accent-pale)', border: '1px solid var(--accent-light)', padding: '0.35rem 1rem', borderRadius: '20px', marginBottom: '2rem' }}>
+                <Star size={13} color="var(--accent)" fill="var(--accent)" />
+                <span style={{ fontSize: '0.82rem', color: 'var(--accent)', fontWeight: 600, letterSpacing: '0.05em' }}>OPEN SOURCE - PARA LATAM</span>
+              </div>
+            </motion.div>
+            <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.1 }} style={{ fontSize: 'clamp(2.4rem, 5vw, 4.8rem)', fontWeight: 700, letterSpacing: '-0.02em', marginBottom: '1.5rem', lineHeight: 1.12 }}>
+              IA para <TextFlip />,<br /><em style={{ fontStyle: 'italic', fontWeight: 300, color: 'var(--accent)' }}>sin barreras.</em>
+            </motion.h1>
+            <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.2 }} style={{ fontSize: '1.1rem', color: 'var(--ink-muted)', maxWidth: '480px', marginBottom: '2.5rem', lineHeight: 1.7 }}>
+              Recursos practicos, abiertos y colaborativos para educadores que quieren integrar inteligencia artificial en el aula.
+            </motion.p>
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.3 }} style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }} className="hero-ctas">
+              <a href="#glosario" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: 'var(--ink)', color: 'var(--bg)', padding: '0.75rem 1.75rem', borderRadius: '30px', textDecoration: 'none', fontWeight: 500 }}>
+                Explorar glosario <ArrowRight size={16} />
+              </a>
+              <a href="#recursos" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: 'transparent', color: 'var(--ink)', padding: '0.75rem 1.75rem', borderRadius: '30px', textDecoration: 'none', fontWeight: 500, border: '1.5px solid var(--border)' }}>
+                <Globe size={16} /> Recursos
+              </a>
+              <a href="https://github.com/german-gimenez/komuny" target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: 'transparent', color: 'var(--ink)', padding: '0.75rem 1.75rem', borderRadius: '30px', textDecoration: 'none', fontWeight: 500, border: '1.5px solid var(--border)' }}>
+                <GitFork size={16} /> Ver en GitHub
+              </a>
+            </motion.div>
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6 }} style={{ display: 'flex', gap: '2.5rem', marginTop: '4rem', flexWrap: 'wrap' }} className="hero-stats">
+              {[{ n: `${glossaryTerms.length}+`, label: 'Terminos en glosario' }, { n: 'LATAM', label: 'Enfoque regional' }, { n: '100%', label: 'Open Source' }].map(s => (
+                <div key={s.label}>
+                  <div style={{ fontFamily: 'Fraunces, serif', fontSize: '1.9rem', fontWeight: 700, color: 'var(--accent)' }}>{s.n}</div>
+                  <div style={{ fontSize: '0.82rem', color: 'var(--ink-muted)', marginTop: '0.2rem' }}>{s.label}</div>
+                </div>
+              ))}
+            </motion.div>
           </div>
-        </motion.div>
-        <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.1 }} style={{ fontSize: 'clamp(2.8rem, 7vw, 5.5rem)', fontWeight: 700, maxWidth: '820px', letterSpacing: '-0.02em', marginBottom: '1.5rem' }}>
-          IA para docentes,<br /><em style={{ fontStyle: 'italic', fontWeight: 300, color: 'var(--accent)' }}>sin barreras.</em>
-        </motion.h1>
-        <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.2 }} style={{ fontSize: '1.15rem', color: 'var(--ink-muted)', maxWidth: '560px', marginBottom: '2.5rem', lineHeight: 1.7 }}>
-          Recursos practicos, abiertos y colaborativos para educadores que quieren integrar inteligencia artificial en el aula.
-        </motion.p>
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.3 }} style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', justifyContent: 'center' }}>
-          <a href="#glosario" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: 'var(--ink)', color: 'var(--bg)', padding: '0.75rem 1.75rem', borderRadius: '30px', textDecoration: 'none', fontWeight: 500 }}>
-            Explorar glosario <ArrowRight size={16} />
-          </a>
-          <a href="#recursos" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: 'transparent', color: 'var(--ink)', padding: '0.75rem 1.75rem', borderRadius: '30px', textDecoration: 'none', fontWeight: 500, border: '1.5px solid var(--border)' }}>
-            <Globe size={16} /> Recursos
-          </a>
-          <a href="https://github.com/german-gimenez/komuny" target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: 'transparent', color: 'var(--ink)', padding: '0.75rem 1.75rem', borderRadius: '30px', textDecoration: 'none', fontWeight: 500, border: '1.5px solid var(--border)' }}>
-            <GitFork size={16} /> Ver en GitHub
-          </a>
-        </motion.div>
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6 }} style={{ display: 'flex', gap: '3rem', marginTop: '5rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-          {[{ n: `${glossaryTerms.length}+`, label: 'Terminos en glosario' }, { n: 'LATAM', label: 'Enfoque regional' }, { n: '100%', label: 'Open Source' }].map(s => (
-            <div key={s.label} style={{ textAlign: 'center' }}>
-              <div style={{ fontFamily: 'Fraunces, serif', fontSize: '2rem', fontWeight: 700, color: 'var(--accent)' }}>{s.n}</div>
-              <div style={{ fontSize: '0.82rem', color: 'var(--ink-muted)', marginTop: '0.2rem' }}>{s.label}</div>
-            </div>
-          ))}
-        </motion.div>
+
+          {/* RIGHT: Globe */}
+          <motion.div
+            className="hero-right"
+            initial={{ opacity: 0, scale: 0.92 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1, delay: 0.35 }}
+          >
+            <Globe3D />
+          </motion.div>
+        </div>
       </section>
 
       {/* FEATURES */}
@@ -241,6 +267,19 @@ export default function Home() {
         input:focus { border-color: var(--accent) !important; box-shadow: 0 0 0 3px rgba(212,98,42,0.1); }
         .feature-row { display: flex; align-items: center; gap: 1rem; padding: 0.9rem 1rem; text-decoration: none; background: transparent; transition: background 0.15s; }
         .feature-row:hover { background: var(--bg); }
+        .hero-grid { display: grid; grid-template-columns: 55fr 45fr; gap: 4rem; align-items: center; padding: 5rem 4rem; max-width: 1280px; margin: 0 auto; min-height: 88vh; }
+        .hero-right { height: 500px; }
+        .hero-stats { justify-content: flex-start; }
+        .hero-ctas { justify-content: flex-start; }
+        @media (max-width: 1024px) { .hero-grid { gap: 2.5rem; padding: 5rem 2.5rem; } }
+        @media (max-width: 768px) {
+          .hero-grid { grid-template-columns: 1fr; padding: 4rem 1.5rem; gap: 0; min-height: unset; }
+          .hero-left { text-align: center; }
+          .hero-right { height: 300px; margin-bottom: 1rem; }
+          .hero-stats { justify-content: center; }
+          .hero-ctas { justify-content: center; }
+        }
+        @media (max-width: 480px) { .hero-right { height: 240px; } }
       `}</style>
       <KomIA />
     </main>
