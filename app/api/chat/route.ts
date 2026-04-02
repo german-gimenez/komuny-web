@@ -1,5 +1,5 @@
 import { streamText, tool, jsonSchema, convertToModelMessages } from 'ai';
-import { bedrock } from '@ai-sdk/amazon-bedrock';
+import { gateway } from '@ai-sdk/gateway';
 import { glossaryTerms } from '../../data/glossary';
 
 const RESOURCES = [
@@ -44,7 +44,7 @@ export async function POST(req: Request) {
 
   try {
     const result = streamText({
-      model: bedrock('anthropic.claude-3-5-haiku-20241022-v1:0'),
+      model: gateway('zai/glm-4.7-flash'),
       system: SYSTEM_PROMPT,
       messages: await convertToModelMessages(messages),
       tools: {
