@@ -42,14 +42,15 @@ HERRAMIENTAS ÚTILES:
 export async function POST(req: Request) {
   const { messages } = await req.json();
 
-  const result = streamText({
-    model: bedrock('amazon.nova-lite-v1:0'),
-    system: SYSTEM_PROMPT,
-    messages: await convertToModelMessages(messages),
-    tools: {
-      buscar_termino: tool({
-        description: 'Busca y devuelve definiciones de términos de IA del glosario de Komuny Edu',
-        inputSchema: jsonSchema<{ query: string }>({
+  try {
+    const result = streamText({
+      model: bedrock('anthropic.claude-3-5-haiku-20241022-v1:0'),
+      system: SYSTEM_PROMPT,
+      messages: await convertToModelMessages(messages),
+      tools: {
+        buscar_termino: tool({
+          description: 'Busca y devuelve definiciones de términos de IA del glosario de Komuny Edu',
+          inputSchema: jsonSchema<{ query: string }>({
           type: 'object',
           properties: {
             query: { type: 'string', description: 'El término o concepto de IA a buscar' },
@@ -89,4 +90,12 @@ export async function POST(req: Request) {
   });
 
   return result.toUIMessageStreamResponse();
+  } catch (error) {
+    console.error('[KomIA API error]', error);
+    const message = error instanceof Error ? error.message : 'Error desconocido';
+    return new Response(
+      JSON.stringify({ error: 'Error al conectar con el modelo de IA', detail: message }),
+      { status: 500, headers: { 'Content-Type': 'application/json' } }
+    );
+  }
 }
