@@ -1,0 +1,28 @@
+export interface GlossaryTerm {
+  term: string; letter: string; definition: string;
+  example?: string; tip?: string; seeAlso?: string;
+  tag?: 'fundamental' | 'técnico' | 'práctica' | 'ética';
+}
+export const glossaryTerms: GlossaryTerm[] = [
+  { term: "Agente de IA", letter: "A", definition: "Un programa de IA que puede realizar tareas por sí solo, tomando decisiones paso a paso. No solo responde preguntas: busca información, organiza datos y ejecuta acciones.", example: "Un agente puede buscar recursos educativos, organizarlos y enviártelos sin que tengas que pedirlo cada vez.", tag: "técnico" },
+  { term: "Alucinación", letter: "A", definition: "Cuando una IA inventa información que suena convincente pero es falsa. Es uno de los riesgos más importantes a conocer.", example: "Le pides a una IA que cite fuentes bibliográficas y te da títulos de libros que no existen.", tip: "Siempre verifica datos, fechas y citas antes de usarlos con tus alumnos.", tag: "práctica" },
+  { term: "Aprendizaje automático", letter: "A", definition: "Una forma de enseñarle a una computadora a aprender de ejemplos, en lugar de programarla con reglas fijas. Los modelos de IA aprenden leyendo millones de textos.", tag: "fundamental" },
+  { term: "Base de conocimiento", letter: "B", definition: "Un conjunto de documentos o información que le das a una IA para que responda solo con base en ese material. Muy útil para crear asistentes especializados en tu materia.", example: "Subir el temario del semestre para que la IA solo responda preguntas sobre esos temas.", tag: "práctica" },
+  { term: "Bias (Sesgo)", letter: "B", definition: "Cuando una IA tiene predisposiciones heredadas de los datos con que fue entrenada. Puede reflejar prejuicios culturales, de género o socioeconómicos.", tip: "Enseña a tus alumnos a identificar sesgos en las respuestas de la IA, igual que aprenden a identificarlos en noticias.", tag: "ética" },
+  { term: "Claude", letter: "C", definition: "Modelo de IA creado por Anthropic. Diseñado con énfasis en seguridad, honestidad y utilidad. Es el modelo central de las herramientas de Komuny Edu.", tag: "fundamental" },
+  { term: "Contexto", letter: "C", definition: "La 'memoria de corto plazo' de una IA. Es la cantidad de texto que puede recordar dentro de una misma conversación. Si la conversación es muy larga, la IA puede 'olvidar' lo que dijiste al principio.", tip: "En conversaciones largas, recuérdale a la IA el objetivo principal de vez en cuando.", tag: "técnico" },
+  { term: "Ética de la IA", letter: "E", definition: "El conjunto de principios que guían el uso responsable de la inteligencia artificial: privacidad, transparencia, equidad, y respeto a los derechos humanos.", tip: "Una conversación esencial con alumnos de todos los niveles.", tag: "ética" },
+  { term: "Few-shot prompting", letter: "F", definition: "Darle ejemplos a la IA antes de hacerle tu pregunta para que entienda mejor qué tipo de respuesta esperas.", example: "\"Quiero preguntas como estas: [ejemplo 1], [ejemplo 2]. Ahora genera 5 más sobre fotosíntesis.\"", tag: "práctica" },
+  { term: "IA Generativa", letter: "I", definition: "IA capaz de crear contenido nuevo: texto, imágenes, audio, video o código. Claude, ChatGPT, DALL-E y Midjourney son ejemplos.", tag: "fundamental" },
+  { term: "Human in the loop", letter: "H", definition: "Mantener al ser humano como supervisor y decisor final en los procesos de IA. La IA sugiere, el docente decide.", tag: "ética" },
+  { term: "LLM (Modelo de Lenguaje Grande)", letter: "L", definition: "Un tipo de IA entrenada con enormes cantidades de texto para entender y generar lenguaje natural. Claude, GPT-4 y Gemini son LLMs.", tag: "fundamental" },
+  { term: "Open Source", letter: "O", definition: "Software cuyo código fuente es público y libre de usar, modificar y distribuir. Komuny Edu es un proyecto open source: cualquier docente puede contribuir.", tag: "fundamental" },
+  { term: "Prompt", letter: "P", definition: "La instrucción o pregunta que le escribes a una IA. La calidad del prompt determina en gran medida la calidad de la respuesta.", example: "El prompt es como la pregunta que le haces a un alumno muy inteligente. Una pregunta vaga da una respuesta vaga.", tag: "práctica" },
+  { term: "Prompt Engineering", letter: "P", definition: "El arte y la técnica de escribir prompts efectivos para obtener mejores respuestas de la IA. Es una habilidad cada vez más valiosa para docentes.", tag: "práctica" },
+  { term: "Skill (en Claude)", letter: "S", definition: "Una configuración especializada de Claude para tareas específicas. Los Skills de Komuny Edu están diseñados especialmente para necesidades docentes.", tag: "práctica" },
+  { term: "Temperatura", letter: "T", definition: "Un parámetro que controla qué tan 'creativa' o 'predecible' es la IA. Temperatura alta = más creativo. Temperatura baja = más preciso.", tip: "Alta para brainstorming; baja para respuestas técnicas precisas.", tag: "técnico" },
+  { term: "Token", letter: "T", definition: "La unidad mínima de texto que procesa una IA. Aproximadamente 1 token = ¾ de una palabra en español. Los modelos tienen límites de tokens por conversación.", tag: "técnico" },
+  { term: "Zero-shot prompting", letter: "Z", definition: "Pedirle a la IA que haga algo sin darle ejemplos previos. Funciona bien para tareas simples; para tareas complejas, considera few-shot prompting.", seeAlso: "Few-shot prompting", tag: "práctica" },
+];
+export const letters = [...new Set(glossaryTerms.map(t => t.letter))].sort();
+export const tagColors: Record<string, string> = { fundamental: '#3A6B4A', técnico: '#1A5C9A', práctica: '#D4622A', ética: '#8B2FC9' };

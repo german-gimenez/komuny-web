@@ -1,0 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;1,9..144,300&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #F5F0E8;
+  --bg-warm: #EDE8DC;
+  --ink: #1A1208;
+  --ink-muted: #5C5040;
+  --accent: #D4622A;
+  --accent-light: #F2936A;
+  --accent-pale: #FBE9DF;
+  --green: #3A6B4A;
+  --green-light: #E8F2EC;
+  --border: #D8D0C0;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { background-color: var(--bg); color: var(--ink); font-family: 'DM Sans', sans-serif; -webkit-font-smoothing: antialiased; }
+h1,h2,h3,h4 { font-family: 'Fraunces', serif; line-height: 1.15; }
+::selection { background: var(--accent); color: white; }
