@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { BookOpen, Cpu, FileText, GraduationCap, Star, ArrowRight, GitFork, Search, X, Lightbulb, AlertCircle, ChevronDown, Globe } from 'lucide-react';
 import { glossaryTerms, letters, tagColors, GlossaryTerm } from './data/glossary';
+import KomIA from './components/KomIA';
 
 const tagLabels: Record<string, string> = {
   fundamental: 'Fundamental',
@@ -241,6 +242,7 @@ export default function Home() {
         .feature-row { display: flex; align-items: center; gap: 1rem; padding: 0.9rem 1rem; text-decoration: none; background: transparent; transition: background 0.15s; }
         .feature-row:hover { background: var(--bg); }
       `}</style>
+      <KomIA />
     </main>
   );
 }
