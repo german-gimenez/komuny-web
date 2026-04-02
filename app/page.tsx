@@ -119,6 +119,9 @@ export default function Home() {
           <a href="#glosario" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: 'var(--ink)', color: 'var(--bg)', padding: '0.75rem 1.75rem', borderRadius: '30px', textDecoration: 'none', fontWeight: 500 }}>
             Explorar glosario <ArrowRight size={16} />
           </a>
+          <a href="#recursos" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: 'transparent', color: 'var(--ink)', padding: '0.75rem 1.75rem', borderRadius: '30px', textDecoration: 'none', fontWeight: 500, border: '1.5px solid var(--border)' }}>
+            <Globe size={16} /> Recursos
+          </a>
           <a href="https://github.com/german-gimenez/komuny" target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: 'transparent', color: 'var(--ink)', padding: '0.75rem 1.75rem', borderRadius: '30px', textDecoration: 'none', fontWeight: 500, border: '1.5px solid var(--border)' }}>
             <GitFork size={16} /> Ver en GitHub
           </a>
