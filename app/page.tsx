@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { BookOpen, Cpu, FileText, GraduationCap, Star, ArrowRight, GitFork, Search, X, Lightbulb, AlertCircle, ChevronDown } from 'lucide-react';
+import { BookOpen, Cpu, FileText, GraduationCap, Star, ArrowRight, GitFork, Search, X, Lightbulb, AlertCircle, ChevronDown, Globe } from 'lucide-react';
 import { glossaryTerms, letters, tagColors, GlossaryTerm } from './data/glossary';
 
 const tagLabels: Record<string, string> = {
@@ -84,6 +84,10 @@ export default function Home() {
           <a href="https://github.com/german-gimenez/komuny" target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.85rem', textDecoration: 'none', background: 'var(--ink)', color: 'var(--bg)', padding: '0.35rem 0.9rem', borderRadius: '20px', fontWeight: 500 }}>
             <GitFork size={14} /> GitHub
           </a>
+          <div style={{ width: '1px', height: '18px', background: 'var(--border)', margin: '0 0.25rem' }} />
+          {[{ href: 'https://www.instagram.com/komuny.social/', label: 'IG' }, { href: 'https://www.facebook.com/komuny.social/', label: 'FB' }, { href: 'https://www.linkedin.com/company/komuny/', label: 'LI' }].map(s => (
+            <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" style={{ fontSize: '0.78rem', color: 'var(--ink-muted)', textDecoration: 'none', padding: '0.3rem 0.6rem', borderRadius: '8px', fontWeight: 600, border: '1px solid var(--border)' }}>{s.label}</a>
+          ))}
         </div>
       </nav>
 
@@ -134,6 +138,7 @@ export default function Home() {
               { icon: <Cpu size={24} />, title: 'Skills para Claude', desc: 'Configuraciones especializadas listas para usar en el aula.', color: '#3A6B4A', bg: '#E8F2EC', status: 'Proximamente' },
               { icon: <FileText size={24} />, title: 'Templates de Prompts', desc: 'Tickets listos para planear clases, evaluar y comunicarte.', color: '#1A5C9A', bg: '#E0EDF7', status: 'Proximamente' },
               { icon: <GraduationCap size={24} />, title: 'Guias paso a paso', desc: 'Desde tu primera clase con IA hasta proyectos de 4 semanas.', color: '#8B2FC9', bg: '#F2E8FB', status: 'Proximamente' },
+              { icon: <Globe size={24} />, title: 'Herramientas gratuitas', desc: 'Canva, Khanmigo, NotebookLM, Perplexity y mas recursos sin costo para docentes.', color: '#C9A227', bg: '#FBF3DC', status: 'Disponible' },
             ].map(f => (
               <motion.div key={f.title} whileHover={{ y: -4 }} transition={{ duration: 0.2 }} style={{ background: 'var(--bg)', border: '1px solid var(--border)', borderRadius: '16px', padding: '1.75rem', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
                 <div style={{ width: '48px', height: '48px', borderRadius: '12px', background: f.bg, display: 'flex', alignItems: 'center', justifyContent: 'center', color: f.color }}>{f.icon}</div>
