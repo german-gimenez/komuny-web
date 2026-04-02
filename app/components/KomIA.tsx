@@ -113,32 +113,38 @@ export default function KomIA() {
 
   return (
     <>
-      {/* Trigger button */}
-      <motion.button
-        onClick={() => setIsOpen(true)}
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-        aria-label="Abrir KomIA"
-        style={{
-          position: 'fixed',
-          bottom: '1.5rem',
-          right: '1.5rem',
-          width: '52px',
-          height: '52px',
-          borderRadius: '50%',
-          background: 'var(--accent)',
-          color: 'white',
-          border: 'none',
-          cursor: 'pointer',
-          display: isOpen ? 'none' : 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          boxShadow: '0 4px 20px rgba(212,98,42,0.4)',
-          zIndex: 200,
-        }}
-      >
-        <MessageCircle size={22} />
-      </motion.button>
+      {/* Trigger button — centered pill */}
+      {!isOpen && (
+        <div style={{ position: 'fixed', bottom: '1.5rem', left: '50%', transform: 'translateX(-50%)', zIndex: 200 }}>
+          <motion.button
+            onClick={() => setIsOpen(true)}
+            whileHover={{ scale: 1.04 }}
+            whileTap={{ scale: 0.96 }}
+            aria-label="Abrir KomIA"
+            style={{
+              background: 'var(--accent)',
+              color: 'white',
+              border: 'none',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '0.5rem',
+              padding: '0.7rem 1.5rem',
+              borderRadius: '30px',
+              boxShadow: '0 4px 24px rgba(212,98,42,0.45)',
+              fontFamily: 'DM Sans, sans-serif',
+              fontSize: '0.9rem',
+              fontWeight: 600,
+              whiteSpace: 'nowrap',
+              letterSpacing: '0.01em',
+            }}
+          >
+            <MessageCircle size={18} />
+            Chatea con KomIA
+          </motion.button>
+        </div>
+      )}
 
       <AnimatePresence>
         {isOpen && (

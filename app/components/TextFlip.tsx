@@ -24,7 +24,7 @@ export default function TextFlip() {
         overflow: 'hidden',
         verticalAlign: 'bottom',
         lineHeight: 'inherit',
-        minWidth: '5.5ch',
+        minWidth: 0,
       }}
     >
       <AnimatePresence mode="wait">

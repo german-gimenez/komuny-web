@@ -96,7 +96,7 @@ export default function Home() {
       <nav style={{ position: 'sticky', top: 0, zIndex: 100, background: 'rgba(245,240,232,0.92)', backdropFilter: 'blur(12px)', borderBottom: '1px solid var(--border)', padding: '0 2rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: '60px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
           <img src="/favicon.jpg" alt="Komuny" style={{ width: '28px', height: '28px', borderRadius: '6px', objectFit: 'cover' }} />
-          <span style={{ fontFamily: 'Fraunces, serif', fontWeight: 700, fontSize: '1.1rem' }}>Komuny Edu</span>
+          <span style={{ fontFamily: 'Fraunces, serif', fontWeight: 700, fontSize: '1.1rem', whiteSpace: 'nowrap' }}>Komuny Edu</span>
         </div>
         <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
           <a href="#glosario" style={{ fontSize: '0.88rem', color: 'var(--ink-muted)', textDecoration: 'none', padding: '0.3rem 0.7rem' }}>Glosario</a>
@@ -104,10 +104,12 @@ export default function Home() {
           <a href="https://github.com/german-gimenez/komuny" target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.85rem', textDecoration: 'none', background: 'var(--ink)', color: 'var(--bg)', padding: '0.35rem 0.9rem', borderRadius: '20px', fontWeight: 500 }}>
             <GitFork size={14} /> GitHub
           </a>
-          <div style={{ width: '1px', height: '18px', background: 'var(--border)', margin: '0 0.25rem' }} />
-          {[{ href: 'https://www.instagram.com/komuny.social/', label: 'IG' }, { href: 'https://www.facebook.com/komuny.social/', label: 'FB' }, { href: 'https://www.linkedin.com/company/komuny/', label: 'LI' }].map(s => (
-            <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" style={{ fontSize: '0.78rem', color: 'var(--ink-muted)', textDecoration: 'none', padding: '0.3rem 0.6rem', borderRadius: '8px', fontWeight: 600, border: '1px solid var(--border)' }}>{s.label}</a>
-          ))}
+          <div className="nav-socials" style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+            <div style={{ width: '1px', height: '18px', background: 'var(--border)', margin: '0 0.25rem' }} />
+            {[{ href: 'https://www.instagram.com/komuny.social/', label: 'IG' }, { href: 'https://www.facebook.com/komuny.social/', label: 'FB' }, { href: 'https://www.linkedin.com/company/komuny/', label: 'LI' }].map(s => (
+              <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" style={{ fontSize: '0.78rem', color: 'var(--ink-muted)', textDecoration: 'none', padding: '0.3rem 0.6rem', borderRadius: '8px', fontWeight: 600, border: '1px solid var(--border)' }}>{s.label}</a>
+            ))}
+          </div>
         </div>
       </nav>
 
@@ -124,7 +126,7 @@ export default function Home() {
                 <span style={{ fontSize: '0.82rem', color: 'var(--accent)', fontWeight: 600, letterSpacing: '0.05em' }}>OPEN SOURCE - PARA LATAM</span>
               </div>
             </motion.div>
-            <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.1 }} style={{ fontSize: 'clamp(2.4rem, 5vw, 4.8rem)', fontWeight: 700, letterSpacing: '-0.02em', marginBottom: '1.5rem', lineHeight: 1.12 }}>
+            <motion.h1 className="hero-h1" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.1 }} style={{ fontWeight: 700, letterSpacing: '-0.02em', marginBottom: '1.5rem', lineHeight: 1.12 }}>
               <span style={{ display: 'block' }}>IA para <TextFlip />,</span>
               <em style={{ fontStyle: 'italic', fontWeight: 300, color: 'var(--accent)' }}>sin barreras.</em>
             </motion.h1>
@@ -142,7 +144,7 @@ export default function Home() {
                 <GitFork size={16} /> Ver en GitHub
               </a>
             </motion.div>
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6 }} style={{ display: 'flex', gap: '2.5rem', marginTop: '4rem', flexWrap: 'wrap' }} className="hero-stats">
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6 }} style={{ display: 'flex', gap: '2rem', marginTop: '3.5rem', flexWrap: 'wrap' }} className="hero-stats">
               {[{ n: `${glossaryTerms.length}+`, label: 'Terminos en glosario' }, { n: 'LATAM', label: 'Enfoque regional' }, { n: '100%', label: 'Open Source' }].map(s => (
                 <div key={s.label}>
                   <div style={{ fontFamily: 'Fraunces, serif', fontSize: '1.9rem', fontWeight: 700, color: 'var(--accent)' }}>{s.n}</div>
@@ -263,24 +265,33 @@ export default function Home() {
       </footer>
 
       <style>{`
+        body { overflow-x: hidden; }
         .term-card { background: var(--bg-warm); border: 1.5px solid var(--border); border-radius: 12px; padding: 1.1rem 1.25rem; transition: border-color 0.15s, box-shadow 0.15s; }
         .term-card:hover { border-color: var(--accent-light); box-shadow: 0 2px 12px rgba(212,98,42,0.08); }
         input:focus { border-color: var(--accent) !important; box-shadow: 0 0 0 3px rgba(212,98,42,0.1); }
         .feature-row { display: flex; align-items: center; gap: 1rem; padding: 0.9rem 1rem; text-decoration: none; background: transparent; transition: background 0.15s; }
         .feature-row:hover { background: var(--bg); }
-        .hero-grid { display: grid; grid-template-columns: 55fr 45fr; gap: 4rem; align-items: center; padding: 5rem 4rem; max-width: 1280px; margin: 0 auto; min-height: 88vh; }
+        .hero-grid { display: grid; grid-template-columns: 55fr 45fr; gap: 4rem; align-items: center; padding: 5rem 4rem; max-width: 1280px; margin: 0 auto; min-height: 88vh; overflow: hidden; }
+        .hero-h1 { font-size: clamp(2.4rem, 5vw, 4.8rem); }
         .hero-right { height: 500px; }
         .hero-stats { justify-content: flex-start; }
         .hero-ctas { justify-content: flex-start; }
         @media (max-width: 1024px) { .hero-grid { gap: 2.5rem; padding: 5rem 2.5rem; } }
         @media (max-width: 768px) {
-          .hero-grid { grid-template-columns: 1fr; padding: 4rem 1.5rem; gap: 0; min-height: unset; }
-          .hero-left { text-align: center; }
-          .hero-right { height: 300px; margin-bottom: 1rem; }
-          .hero-stats { justify-content: center; }
-          .hero-ctas { justify-content: center; }
+          .nav-socials { display: none !important; }
+          .hero-grid { grid-template-columns: 1fr; padding: 3rem 1.25rem 2rem; gap: 0; min-height: unset; }
+          .hero-left { text-align: center; max-width: 100%; }
+          .hero-h1 { font-size: 2rem; }
+          .hero-right { height: 280px; margin-bottom: 0.5rem; }
+          .hero-stats { justify-content: center; gap: 1.5rem !important; }
+          .hero-ctas { justify-content: center; flex-direction: column; align-items: center; }
+          .hero-ctas a { width: 100%; max-width: 260px; justify-content: center; }
         }
-        @media (max-width: 480px) { .hero-right { height: 240px; } }
+        @media (max-width: 480px) {
+          .hero-h1 { font-size: 1.75rem; }
+          .hero-right { height: 240px; }
+          .hero-stats { gap: 1rem !important; }
+        }
       `}</style>
       <KomIA />
     </main>
