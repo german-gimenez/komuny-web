@@ -70,6 +70,14 @@ export default function Home() {
     { href: 'https://github.com/german-gimenez/komuny', label: 'GitHub' },
   ];
 
+  const features = [
+    { icon: <BookOpen size={18} />, title: 'Glosario', desc: 'Terminos de IA explicados para educadores.', color: '#D4622A', bg: '#FBE9DF', href: '#glosario', label: 'Ver →', external: false },
+    { icon: <Globe size={18} />, title: 'Herramientas gratuitas', desc: 'Canva, Khanmigo, NotebookLM y mas recursos sin costo.', color: '#C9A227', bg: '#FBF3DC', href: 'https://github.com/german-gimenez/komuny/blob/main/recursos/herramientas-gratuitas.md', label: 'Ver lista →', external: true },
+    { icon: <Cpu size={18} />, title: 'Skills para Claude', desc: 'Configuraciones especializadas listas para usar en el aula.', color: '#3A6B4A', bg: '#E8F2EC', href: 'https://github.com/german-gimenez/komuny/tree/main/skills', label: 'En GitHub →', external: true },
+    { icon: <FileText size={18} />, title: 'Templates de Prompts', desc: 'Tickets listos para planear clases y evaluar.', color: '#1A5C9A', bg: '#E0EDF7', href: 'https://github.com/german-gimenez/komuny/tree/main/templates', label: 'En GitHub →', external: true },
+    { icon: <GraduationCap size={18} />, title: 'Guias paso a paso', desc: 'Desde tu primera clase con IA hasta proyectos de 4 semanas.', color: '#8B2FC9', bg: '#F2E8FB', href: 'https://github.com/german-gimenez/komuny/tree/main/guides', label: 'En GitHub →', external: true },
+  ];
+
   return (
     <main>
       {/* NAV */}
@@ -126,26 +134,26 @@ export default function Home() {
       </section>
 
       {/* FEATURES */}
-      <section id="recursos" style={{ padding: '5rem 2rem', background: 'var(--bg-warm)' }}>
-        <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
-          <div style={{ textAlign: 'center', marginBottom: '3.5rem' }}>
-            <h2 style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', marginBottom: '0.75rem' }}>Todo lo que necesitas</h2>
-            <p style={{ color: 'var(--ink-muted)', fontSize: '1.05rem' }}>Recursos para cada etapa de tu camino con IA</p>
+      <section id="recursos" style={{ padding: '3rem 2rem', background: 'var(--bg-warm)' }}>
+        <div style={{ maxWidth: '860px', margin: '0 auto' }}>
+          <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
+            <h2 style={{ fontSize: 'clamp(1.6rem, 3.5vw, 2.4rem)', marginBottom: '0.4rem' }}>Todo lo que necesitas</h2>
+            <p style={{ color: 'var(--ink-muted)', fontSize: '1rem' }}>Recursos para cada etapa de tu camino con IA</p>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '1.5rem' }}>
-            {[
-              { icon: <BookOpen size={24} />, title: 'Glosario', desc: 'Terminos de IA explicados sin tecnicismos, pensados para educadores.', color: '#D4622A', bg: '#FBE9DF', status: 'Disponible' },
-              { icon: <Cpu size={24} />, title: 'Skills para Claude', desc: 'Configuraciones especializadas listas para usar en el aula.', color: '#3A6B4A', bg: '#E8F2EC', status: 'Proximamente' },
-              { icon: <FileText size={24} />, title: 'Templates de Prompts', desc: 'Tickets listos para planear clases, evaluar y comunicarte.', color: '#1A5C9A', bg: '#E0EDF7', status: 'Proximamente' },
-              { icon: <GraduationCap size={24} />, title: 'Guias paso a paso', desc: 'Desde tu primera clase con IA hasta proyectos de 4 semanas.', color: '#8B2FC9', bg: '#F2E8FB', status: 'Proximamente' },
-              { icon: <Globe size={24} />, title: 'Herramientas gratuitas', desc: 'Canva, Khanmigo, NotebookLM, Perplexity y mas recursos sin costo para docentes.', color: '#C9A227', bg: '#FBF3DC', status: 'Disponible' },
-            ].map(f => (
-              <motion.div key={f.title} whileHover={{ y: -4 }} transition={{ duration: 0.2 }} style={{ background: 'var(--bg)', border: '1px solid var(--border)', borderRadius: '16px', padding: '1.75rem', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-                <div style={{ width: '48px', height: '48px', borderRadius: '12px', background: f.bg, display: 'flex', alignItems: 'center', justifyContent: 'center', color: f.color }}>{f.icon}</div>
-                <h3 style={{ fontSize: '1.1rem', fontFamily: 'Fraunces, serif' }}>{f.title}</h3>
-                <p style={{ fontSize: '0.9rem', color: 'var(--ink-muted)', lineHeight: 1.6, flex: 1 }}>{f.desc}</p>
-                <span style={{ fontSize: '0.78rem', color: f.color, fontWeight: 600 }}>{f.status}</span>
-              </motion.div>
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
+            {features.map((f, i) => (
+              <a key={f.title} href={f.href}
+                target={f.external ? '_blank' : undefined}
+                rel={f.external ? 'noopener noreferrer' : undefined}
+                className="feature-row"
+                style={{ borderTop: i === 0 ? '1px solid var(--border)' : 'none', borderBottom: '1px solid var(--border)' }}>
+                <div style={{ width: '36px', height: '36px', borderRadius: '8px', background: f.bg, color: f.color, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>{f.icon}</div>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <span style={{ fontFamily: 'Fraunces, serif', fontWeight: 700, fontSize: '0.95rem', color: 'var(--ink)', marginRight: '0.5rem' }}>{f.title}</span>
+                  <span style={{ fontSize: '0.875rem', color: 'var(--ink-muted)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{f.desc}</span>
+                </div>
+                <span style={{ fontSize: '0.82rem', fontWeight: 600, color: f.color, flexShrink: 0, whiteSpace: 'nowrap' }}>{f.label}</span>
+              </a>
             ))}
           </div>
         </div>
@@ -227,6 +235,8 @@ export default function Home() {
         .term-card { background: var(--bg-warm); border: 1.5px solid var(--border); border-radius: 12px; padding: 1.1rem 1.25rem; transition: border-color 0.15s, box-shadow 0.15s; }
         .term-card:hover { border-color: var(--accent-light); box-shadow: 0 2px 12px rgba(212,98,42,0.08); }
         input:focus { border-color: var(--accent) !important; box-shadow: 0 0 0 3px rgba(212,98,42,0.1); }
+        .feature-row { display: flex; align-items: center; gap: 1rem; padding: 0.9rem 1rem; text-decoration: none; background: transparent; transition: background 0.15s; }
+        .feature-row:hover { background: var(--bg); }
       `}</style>
     </main>
   );
