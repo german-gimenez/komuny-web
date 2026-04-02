@@ -5,6 +5,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { MessageCircle, X, Send, Bot } from 'lucide-react';
 import { useChat } from '@ai-sdk/react';
 import { DefaultChatTransport, isTextUIPart } from 'ai';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 const SUGGESTIONS = [
   '¿Qué es un LLM?',
@@ -13,13 +15,70 @@ const SUGGESTIONS = [
   'Cómo hacer un buen prompt',
 ];
 
+function CodeBlock({ code, className }: { code: string; className?: string }) {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = async () => {
+    await navigator.clipboard.writeText(code);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  return (
+    <div style={{ position: 'relative', margin: '0.6em 0' }}>
+      <pre style={{
+        background: 'var(--ink)',
+        color: 'var(--bg)',
+        borderRadius: '8px',
+        padding: '0.75rem 1rem',
+        paddingRight: '5rem',
+        fontSize: '0.8rem',
+        overflowX: 'auto',
+        lineHeight: 1.5,
+        fontFamily: 'monospace',
+        margin: 0,
+        whiteSpace: 'pre-wrap',
+        wordBreak: 'break-word',
+      }}>
+        <code className={className}>{code}</code>
+      </pre>
+      <button
+        onClick={handleCopy}
+        title="Copiar"
+        style={{
+          position: 'absolute',
+          top: '0.4rem',
+          right: '0.4rem',
+          background: copied ? '#3A6B4A' : 'rgba(255,255,255,0.15)',
+          border: 'none',
+          borderRadius: '5px',
+          padding: '0.2rem 0.6rem',
+          fontSize: '0.7rem',
+          color: 'white',
+          cursor: 'pointer',
+          transition: 'background 0.2s',
+          whiteSpace: 'nowrap',
+        }}
+      >
+        {copied ? '✓ Copiado' : 'Copiar'}
+      </button>
+    </div>
+  );
+}
+
 export default function KomIA() {
   const [isOpen, setIsOpen] = useState(false);
   const [input, setInput] = useState('');
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const { messages, sendMessage, status } = useChat({
     transport: new DefaultChatTransport({ api: '/api/chat' }),
+    experimental_throttle: 50,
+    onError: (error) => {
+      setErrorMsg('Ocurrió un error al conectar con KomIA. Intentá de nuevo.');
+      console.error('[KomIA]', error);
+    },
   });
 
   const isLoading = status === 'streaming' || status === 'submitted';
@@ -35,11 +94,14 @@ export default function KomIA() {
     const text = input.trim();
     if (!text || isLoading) return;
     setInput('');
+    setErrorMsg(null);
     sendMessage({ text });
   };
 
   const handleSuggestion = (text: string) => {
     if (isLoading) return;
+    setInput('');
+    setErrorMsg(null);
     sendMessage({ text });
   };
 
@@ -162,43 +224,15 @@ export default function KomIA() {
                 gap: '0.75rem',
               }}>
                 {messages.length === 0 && (
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-                    {/* Welcome message */}
-                    <div style={{ display: 'flex', gap: '0.6rem', alignItems: 'flex-start' }}>
-                      <div style={{ width: '26px', height: '26px', borderRadius: '6px', background: 'var(--accent)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: '2px' }}>
-                        <Bot size={13} color="white" />
-                      </div>
-                      <div style={{ background: 'var(--bg-warm)', border: '1px solid var(--border)', borderRadius: '12px 12px 12px 2px', padding: '0.75rem 1rem', fontSize: '0.88rem', lineHeight: 1.6, maxWidth: '90%' }}>
-                        <p style={{ margin: 0, color: 'var(--ink)' }}>
-                          ¡Hola! Soy <strong>KomIA</strong>, tu asistente de Komuny Edu.<br />
-                          Puedo ayudarte con IA en el aula, recursos para docentes, o cualquier pregunta que tengas.
-                        </p>
-                      </div>
+                  <div style={{ display: 'flex', gap: '0.6rem', alignItems: 'flex-start' }}>
+                    <div style={{ width: '26px', height: '26px', borderRadius: '6px', background: 'var(--accent)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: '2px' }}>
+                      <Bot size={13} color="white" />
                     </div>
-                    {/* Suggestions */}
-                    <div style={{ paddingLeft: '32px', display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
-                      <p style={{ fontSize: '0.75rem', color: 'var(--ink-muted)', margin: '0 0 0.25rem' }}>Sugerencias:</p>
-                      {SUGGESTIONS.map(s => (
-                        <button
-                          key={s}
-                          onClick={() => handleSuggestion(s)}
-                          style={{
-                            background: 'transparent',
-                            border: '1px solid var(--border)',
-                            borderRadius: '20px',
-                            padding: '0.35rem 0.85rem',
-                            fontSize: '0.82rem',
-                            color: 'var(--ink-muted)',
-                            cursor: 'pointer',
-                            textAlign: 'left',
-                            transition: 'border-color 0.15s, color 0.15s',
-                          }}
-                          onMouseEnter={e => { (e.target as HTMLButtonElement).style.borderColor = 'var(--accent)'; (e.target as HTMLButtonElement).style.color = 'var(--accent)'; }}
-                          onMouseLeave={e => { (e.target as HTMLButtonElement).style.borderColor = 'var(--border)'; (e.target as HTMLButtonElement).style.color = 'var(--ink-muted)'; }}
-                        >
-                          {s}
-                        </button>
-                      ))}
+                    <div style={{ background: 'var(--bg-warm)', border: '1px solid var(--border)', borderRadius: '12px 12px 12px 2px', padding: '0.75rem 1rem', fontSize: '0.88rem', lineHeight: 1.6, maxWidth: '90%' }}>
+                      <p style={{ margin: 0, color: 'var(--ink)' }}>
+                        ¡Hola! Soy <strong>KomIA</strong>, tu asistente de Komuny Edu. 👋<br />
+                        Puedo ayudarte con IA en el aula, recursos para docentes, o cualquier pregunta que tengas.
+                      </p>
                     </div>
                   </div>
                 )}
@@ -231,9 +265,70 @@ export default function KomIA() {
                         fontSize: '0.88rem',
                         lineHeight: 1.6,
                         maxWidth: '85%',
-                        whiteSpace: 'pre-wrap',
                       }}>
-                        {text}
+                        {isUser ? (
+                          <span style={{ whiteSpace: 'pre-wrap' }}>{text}</span>
+                        ) : (
+                          <ReactMarkdown
+                            remarkPlugins={[remarkGfm]}
+                            components={{
+                              p: ({ children }) => (
+                                <p style={{ margin: '0 0 0.5em', lineHeight: 1.6 }}>{children}</p>
+                              ),
+                              a: ({ href, children }) => (
+                                <a
+                                  href={href}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  style={{ color: 'var(--accent)', textDecoration: 'underline' }}
+                                >
+                                  {children}
+                                </a>
+                              ),
+                              code({ className, children, ...props }) {
+                                const isInline = !className && !String(children).includes('\n');
+                                if (isInline) {
+                                  return (
+                                    <code
+                                      style={{
+                                        background: 'var(--bg)',
+                                        border: '1px solid var(--border)',
+                                        borderRadius: '4px',
+                                        padding: '0.1em 0.35em',
+                                        fontSize: '0.85em',
+                                        fontFamily: 'monospace',
+                                      }}
+                                      {...props}
+                                    >
+                                      {children}
+                                    </code>
+                                  );
+                                }
+                                return (
+                                  <CodeBlock
+                                    code={String(children).replace(/\n$/, '')}
+                                    className={className}
+                                  />
+                                );
+                              },
+                              ul: ({ children }) => (
+                                <ul style={{ paddingLeft: '1.2em', margin: '0.4em 0' }}>{children}</ul>
+                              ),
+                              ol: ({ children }) => (
+                                <ol style={{ paddingLeft: '1.2em', margin: '0.4em 0' }}>{children}</ol>
+                              ),
+                              li: ({ children }) => (
+                                <li style={{ marginBottom: '0.2em' }}>{children}</li>
+                              ),
+                              strong: ({ children }) => (
+                                <strong style={{ fontWeight: 600, color: 'var(--ink)' }}>{children}</strong>
+                              ),
+                              hr: () => null,
+                            }}
+                          >
+                            {text}
+                          </ReactMarkdown>
+                        )}
                       </div>
                     </div>
                   );
@@ -259,6 +354,77 @@ export default function KomIA() {
                   </div>
                 )}
                 <div ref={messagesEndRef} />
+              </div>
+
+              {/* Error banner */}
+              {errorMsg && (
+                <div style={{
+                  padding: '0.5rem 1rem',
+                  background: '#FBE9DF',
+                  borderTop: '1px solid var(--border)',
+                  fontSize: '0.8rem',
+                  color: 'var(--accent)',
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  flexShrink: 0,
+                }}>
+                  ⚠️ {errorMsg}
+                  <button
+                    onClick={() => setErrorMsg(null)}
+                    style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--accent)', fontSize: '1rem', padding: '0 0.2rem', lineHeight: 1 }}
+                  >
+                    ✕
+                  </button>
+                </div>
+              )}
+
+              {/* Suggestion chips — always visible */}
+              <div
+                className="kom-chips"
+                style={{
+                  borderTop: '1px solid var(--border)',
+                  padding: '0.5rem 1rem',
+                  display: 'flex',
+                  gap: '0.5rem',
+                  overflowX: 'auto',
+                  flexShrink: 0,
+                  background: 'var(--bg)',
+                  scrollbarWidth: 'none',
+                }}
+              >
+                {SUGGESTIONS.map(s => (
+                  <button
+                    key={s}
+                    onClick={() => handleSuggestion(s)}
+                    disabled={isLoading}
+                    style={{
+                      flexShrink: 0,
+                      background: 'transparent',
+                      border: '1px solid var(--border)',
+                      borderRadius: '20px',
+                      padding: '0.3rem 0.8rem',
+                      fontSize: '0.78rem',
+                      color: 'var(--ink-muted)',
+                      cursor: isLoading ? 'not-allowed' : 'pointer',
+                      whiteSpace: 'nowrap',
+                      opacity: isLoading ? 0.5 : 1,
+                      transition: 'border-color 0.15s, color 0.15s',
+                    }}
+                    onMouseEnter={e => {
+                      if (!isLoading) {
+                        e.currentTarget.style.borderColor = 'var(--accent)';
+                        e.currentTarget.style.color = 'var(--accent)';
+                      }
+                    }}
+                    onMouseLeave={e => {
+                      e.currentTarget.style.borderColor = 'var(--border)';
+                      e.currentTarget.style.color = 'var(--ink-muted)';
+                    }}
+                  >
+                    {s}
+                  </button>
+                ))}
               </div>
 
               {/* Input */}

@@ -1,4 +1,4 @@
-import { streamText, tool, jsonSchema, convertToModelMessages } from 'ai';
+import { streamText, tool, jsonSchema, convertToModelMessages, stepCountIs } from 'ai';
 import { gateway } from '@ai-sdk/gateway';
 import { glossaryTerms } from '../../data/glossary';
 
@@ -23,10 +23,22 @@ Tu misión principal es ayudar a docentes latinoamericanos a integrar IA en sus 
 
 CÓMO RESPONDER:
 - Siempre en español, de forma concisa, cálida y práctica.
-- Prioriza respuestas accionables: qué puede hacer el docente HOY.
+- Usá un tono amigable y cercano. Podés usar emojis para organizar secciones: 🎯 💡 📚 ✅ 🚀 👀
+- Priorizá respuestas accionables: qué puede hacer el docente HOY.
 - Si no sabés algo con certeza, decilo honestamente.
-- Para preguntas de IA en educación, usa los recursos de Komuny Edu.
+- Para preguntas de IA en educación, usá los recursos de Komuny Edu.
 - Para cualquier otra pregunta, respondé directamente con tu conocimiento.
+
+FORMATO OBLIGATORIO — seguí estas reglas siempre:
+- PROHIBIDO usar ## o ### para títulos. En su lugar usá un emoji + negrita: **🎯 Título de sección**
+- Para listas usá guiones (-) o numeración (1. 2. 3.)
+- Para ejemplos de prompts o código, SIEMPRE usá bloques con triple backtick:
+\`\`\`
+Ejemplo de prompt aquí
+\`\`\`
+- Los links deben tener formato markdown: [texto del link](https://url.com)
+- Mantené las respuestas concisas — mejor cortas y accionables que largas y densas.
+- No uses separadores --- ni ___
 
 RECURSOS DISPONIBLES EN KOMUNY EDU:
 ${resourcesContext}
@@ -35,8 +47,8 @@ GLOSARIO DE IA PARA DOCENTES (usalo como referencia):
 ${glossaryContext}
 
 HERRAMIENTAS ÚTILES:
-- Cuando el usuario pregunte por un término de IA → usa buscar_termino
-- Cuando pida recursos, herramientas o materiales → usa listar_recursos
+- Cuando el usuario pregunte por un término de IA → usá buscar_termino
+- Cuando pida recursos, herramientas o materiales → usá listar_recursos
 - Para todo lo demás → respondé directamente`;
 
 export async function POST(req: Request) {
@@ -47,6 +59,7 @@ export async function POST(req: Request) {
       model: gateway('zai/glm-4.7-flash'),
       system: SYSTEM_PROMPT,
       messages: await convertToModelMessages(messages),
+      stopWhen: stepCountIs(3),
       tools: {
         buscar_termino: tool({
           description: 'Busca y devuelve definiciones de términos de IA del glosario de Komuny Edu',

@@ -20,3 +20,4 @@ html { scroll-behavior: smooth; }
 body { background-color: var(--bg); color: var(--ink); font-family: 'DM Sans', sans-serif; -webkit-font-smoothing: antialiased; }
 h1,h2,h3,h4 { font-family: 'Fraunces', serif; line-height: 1.15; }
 ::selection { background: var(--accent); color: white; }
+.kom-chips::-webkit-scrollbar { display: none; }
