@@ -167,7 +167,7 @@ export default function Home() {
       </section>
 
       {/* FEATURES */}
-      <section id="recursos" style={{ padding: '3rem 2rem', background: 'var(--bg-warm)' }}>
+      <section id="recursos" className="recursos-section" style={{ padding: '3rem 2rem', background: 'var(--bg-warm)' }}>
         <div style={{ maxWidth: '860px', margin: '0 auto' }}>
           <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
             <h2 style={{ fontSize: 'clamp(1.6rem, 3.5vw, 2.4rem)', marginBottom: '0.4rem' }}>Todo lo que necesitas</h2>
@@ -180,12 +180,14 @@ export default function Home() {
                 rel={f.external ? 'noopener noreferrer' : undefined}
                 className="feature-row"
                 style={{ borderTop: i === 0 ? '1px solid var(--border)' : 'none', borderBottom: '1px solid var(--border)' }}>
-                <div style={{ width: '36px', height: '36px', borderRadius: '8px', background: f.bg, color: f.color, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>{f.icon}</div>
+                <div style={{ width: '40px', height: '40px', borderRadius: '10px', background: f.bg, color: f.color, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>{f.icon}</div>
                 <div style={{ flex: 1, minWidth: 0 }}>
-                  <span style={{ fontFamily: 'Fraunces, serif', fontWeight: 700, fontSize: '0.95rem', color: 'var(--ink)', marginRight: '0.5rem' }}>{f.title}</span>
-                  <span style={{ fontSize: '0.875rem', color: 'var(--ink-muted)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{f.desc}</span>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
+                    <span style={{ fontFamily: 'Fraunces, serif', fontWeight: 700, fontSize: '0.95rem', color: 'var(--ink)' }}>{f.title}</span>
+                    <span style={{ fontSize: '0.78rem', fontWeight: 600, color: f.color, whiteSpace: 'nowrap', background: f.bg, padding: '0.1rem 0.5rem', borderRadius: '10px' }}>{f.label}</span>
+                  </div>
+                  <p style={{ fontSize: '0.83rem', color: 'var(--ink-muted)', marginTop: '0.15rem', lineHeight: 1.4 }}>{f.desc}</p>
                 </div>
-                <span style={{ fontSize: '0.82rem', fontWeight: 600, color: f.color, flexShrink: 0, whiteSpace: 'nowrap' }}>{f.label}</span>
               </a>
             ))}
           </div>
@@ -269,7 +271,7 @@ export default function Home() {
         .term-card { background: var(--bg-warm); border: 1.5px solid var(--border); border-radius: 12px; padding: 1.1rem 1.25rem; transition: border-color 0.15s, box-shadow 0.15s; }
         .term-card:hover { border-color: var(--accent-light); box-shadow: 0 2px 12px rgba(212,98,42,0.08); }
         input:focus { border-color: var(--accent) !important; box-shadow: 0 0 0 3px rgba(212,98,42,0.1); }
-        .feature-row { display: flex; align-items: center; gap: 1rem; padding: 0.9rem 1rem; text-decoration: none; background: transparent; transition: background 0.15s; }
+        .feature-row { display: flex; align-items: center; gap: 1rem; padding: 1rem 1.25rem; text-decoration: none; background: transparent; transition: background 0.15s; }
         .feature-row:hover { background: var(--bg); }
         .hero-grid { display: grid; grid-template-columns: 55fr 45fr; gap: 4rem; align-items: center; padding: 5rem 4rem; max-width: 1280px; margin: 0 auto; min-height: 88vh; overflow: hidden; }
         .hero-h1 { font-size: clamp(2.4rem, 5vw, 4.8rem); }
@@ -278,6 +280,8 @@ export default function Home() {
         .hero-ctas { justify-content: flex-start; }
         @media (max-width: 1024px) { .hero-grid { gap: 2.5rem; padding: 5rem 2.5rem; } }
         @media (max-width: 768px) {
+          .recursos-section { padding: 2rem 1rem !important; }
+          .feature-row { padding: 0.85rem 0.75rem; }
           .site-nav { padding: 0 1rem !important; gap: 0.25rem; }
           .nav-socials { display: none !important; }
           .nav-links { gap: 0.25rem !important; }
