@@ -1,6 +1,7 @@
 'use client';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
+import KomIA from '../components/KomIA';
 import {
   Shield,
   Scale,
@@ -698,6 +699,7 @@ export default function FundacionPage() {
           .nav-github-text { display: none; }
         }
       `}</style>
+      <KomIA />
     </main>
   );
 }
