@@ -664,24 +664,23 @@ export default function FundacionPage() {
       </section>
 
       {/* FOOTER */}
-      <footer
-        style={{
-          padding: '2.5rem 2rem',
-          textAlign: 'center',
-          borderTop: '1px solid var(--border)',
-          background: 'var(--bg-warm)',
-        }}
-      >
+      <footer style={{ padding: '2.5rem 2rem', textAlign: 'center', borderTop: '1px solid var(--border)', background: 'var(--bg-warm)' }}>
+        <div style={{ display: 'flex', justifyContent: 'center', gap: '0.75rem', marginBottom: '1rem', flexWrap: 'wrap' as const }}>
+          {[
+            { href: 'https://www.instagram.com/komuny.social/', label: 'Instagram' },
+            { href: 'https://www.facebook.com/komuny.social/', label: 'Facebook' },
+            { href: 'https://www.linkedin.com/company/komuny/', label: 'LinkedIn' },
+            { href: 'https://github.com/german-gimenez/komuny', label: 'GitHub' },
+          ].map(s => (
+            <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer"
+              style={{ fontSize: '0.82rem', color: 'var(--ink-muted)', textDecoration: 'none', padding: '0.4rem 1rem', borderRadius: '20px', border: '1.5px solid var(--border)', background: 'var(--bg)', fontWeight: 500 }}>
+              {s.label}
+            </a>
+          ))}
+        </div>
         <p style={{ fontSize: '0.85rem', color: 'var(--ink-muted)' }}>
-          Komuny Edu &mdash; Hecho con amor para docentes de Am&#233;rica Latina &middot;{' '}
-          <a
-            href="https://napsix.ai"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{ color: 'var(--accent)', textDecoration: 'none' }}
-          >
-            Napsix.AI
-          </a>
+          Komuny Edu &mdash; Hecho con amor para docentes de America Latina &middot;{' '}
+          <a href="https://napsix.ai" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--accent)', textDecoration: 'none' }}>Napsix.AI</a>
         </p>
       </footer>
 
