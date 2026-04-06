@@ -1,8 +1,9 @@
 'use client';
 import { useState } from 'react';
 import dynamic from 'next/dynamic';
+import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
-import { BookOpen, Cpu, FileText, GraduationCap, Star, ArrowRight, GitFork, Search, X, Lightbulb, AlertCircle, ChevronDown, Globe } from 'lucide-react';
+import { BookOpen, Cpu, FileText, GraduationCap, Star, ArrowRight, GitFork, Search, X, Lightbulb, AlertCircle, ChevronDown, Globe, Scale, Shield, Handshake } from 'lucide-react';
 import { glossaryTerms, letters, tagColors, GlossaryTerm } from './data/glossary';
 import KomIA from './components/KomIA';
 import TextFlip from './components/TextFlip';
@@ -101,6 +102,7 @@ export default function Home() {
         <div className="nav-links" style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
           <a href="#glosario" style={{ fontSize: '0.88rem', color: 'var(--ink-muted)', textDecoration: 'none', padding: '0.3rem 0.7rem' }}>Glosario</a>
           <a href="#recursos" className="nav-recursos" style={{ fontSize: '0.88rem', color: 'var(--ink-muted)', textDecoration: 'none', padding: '0.3rem 0.7rem' }}>Recursos</a>
+          <Link href="/fundacion" className="nav-fundacion" style={{ fontSize: '0.88rem', color: 'var(--ink-muted)', textDecoration: 'none', padding: '0.3rem 0.7rem' }}>Fundaci&#243;n</Link>
           <a href="https://github.com/german-gimenez/komuny" target="_blank" rel="noopener noreferrer" className="nav-github" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.85rem', textDecoration: 'none', background: 'var(--ink)', color: 'var(--bg)', padding: '0.35rem 0.9rem', borderRadius: '20px', fontWeight: 500 }}>
             <GitFork size={14} /> <span className="nav-github-text">GitHub</span>
           </a>
@@ -250,6 +252,129 @@ export default function Home() {
         </div>
       </section>
 
+      {/* RESPALDO INSTITUCIONAL */}
+      <section style={{ padding: '4rem 2rem', background: 'var(--bg)', borderTop: '1px solid var(--border)', borderBottom: '1px solid var(--border)' }}>
+        <div style={{ maxWidth: '820px', margin: '0 auto' }}>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            style={{ textAlign: 'center', marginBottom: '2.25rem' }}
+          >
+            <h2 style={{ fontSize: 'clamp(1.5rem, 3vw, 2rem)', marginBottom: '0.5rem' }}>
+              Con el respaldo de instituciones educativas
+            </h2>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="respaldo-badges"
+          >
+            {[
+              {
+                icon: <Scale size={15} />,
+                label: 'Declarada de Inter\u00e9s por el Senado de Mendoza',
+                href: 'https://senadomendoza.gob.ar/declaran-de-interes-una-fundacion-dedicada-a-la-educacion-y-capacitacion-de-docentes/',
+                external: true,
+              },
+              {
+                icon: <Shield size={15} />,
+                label: 'Persona Jur\u00eddica \u00b7 CUIT 30-71735388-5',
+                href: '/fundacion',
+                external: false,
+              },
+              {
+                icon: <Handshake size={15} />,
+                label: 'Convenio con IES\u00a09-029',
+                href: 'https://www.ies9029.edu.ar/convenio-marco-de-cooperacion-entre-ies-9-029-y-fundacion-komuny/',
+                external: true,
+              },
+            ].map((b, i) =>
+              b.external ? (
+                <a
+                  key={i}
+                  href={b.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="respaldo-badge"
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '0.55rem',
+                    padding: '0.6rem 1.1rem',
+                    borderRadius: '30px',
+                    border: '1.5px solid var(--border)',
+                    background: 'var(--bg-warm)',
+                    fontSize: '0.85rem',
+                    fontWeight: 500,
+                    color: 'var(--ink)',
+                    textDecoration: 'none',
+                    transition: 'border-color 0.15s, box-shadow 0.15s',
+                    whiteSpace: 'nowrap' as const,
+                  }}
+                >
+                  <span style={{ color: 'var(--accent)', display: 'flex' }}>{b.icon}</span>
+                  {b.label}
+                </a>
+              ) : (
+                <Link
+                  key={i}
+                  href={b.href}
+                  className="respaldo-badge"
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '0.55rem',
+                    padding: '0.6rem 1.1rem',
+                    borderRadius: '30px',
+                    border: '1.5px solid var(--border)',
+                    background: 'var(--bg-warm)',
+                    fontSize: '0.85rem',
+                    fontWeight: 500,
+                    color: 'var(--ink)',
+                    textDecoration: 'none',
+                    transition: 'border-color 0.15s, box-shadow 0.15s',
+                    whiteSpace: 'nowrap' as const,
+                  }}
+                >
+                  <span style={{ color: 'var(--accent)', display: 'flex' }}>{b.icon}</span>
+                  {b.label}
+                </Link>
+              )
+            )}
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            style={{ textAlign: 'center', marginTop: '2rem' }}
+          >
+            <p style={{ fontSize: '0.95rem', color: 'var(--ink-muted)', lineHeight: 1.7, maxWidth: '560px', margin: '0 auto 1.5rem' }}>
+              Fundaci&#243;n Komuny Social es una organizaci&#243;n sin fines de lucro registrada en Argentina,
+              con reconocimiento legislativo provincial y convenios activos con instituciones educativas.
+            </p>
+            <Link
+              href="/fundacion"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.4rem',
+                fontSize: '0.9rem',
+                color: 'var(--accent)',
+                fontWeight: 600,
+                textDecoration: 'none',
+              }}
+            >
+              Conoc&#233; m&#225;s sobre la Fundaci&#243;n <ArrowRight size={15} />
+            </Link>
+          </motion.div>
+        </div>
+      </section>
+
       {/* FOOTER */}
       <footer style={{ padding: '2.5rem 2rem', textAlign: 'center', borderTop: '1px solid var(--border)', background: 'var(--bg-warm)' }}>
         <div style={{ display: 'flex', justifyContent: 'center', gap: '0.75rem', marginBottom: '1.25rem', flexWrap: 'wrap' as const }}>
@@ -299,10 +424,13 @@ export default function Home() {
         @media (max-width: 480px) {
           .site-nav { padding: 0 0.75rem !important; }
           .nav-recursos { display: none !important; }
+          .nav-fundacion { display: none !important; }
           .hero-h1 { font-size: 1.75rem; }
           .hero-right { height: 240px; }
           .hero-stats { gap: 1rem !important; }
         }
+        .respaldo-badges { display: flex; flex-wrap: wrap; gap: 0.75rem; justify-content: center; }
+        .respaldo-badge:hover { border-color: var(--accent-light) !important; box-shadow: 0 2px 12px rgba(212,98,42,0.1); }
       `}</style>
       <KomIA />
     </main>
