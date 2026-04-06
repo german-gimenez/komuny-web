@@ -377,13 +377,18 @@ export default function Home() {
 
       {/* FOOTER */}
       <footer style={{ padding: '2.5rem 2rem', textAlign: 'center', borderTop: '1px solid var(--border)', background: 'var(--bg-warm)' }}>
-        <div style={{ display: 'flex', justifyContent: 'center', gap: '0.75rem', marginBottom: '1.25rem', flexWrap: 'wrap' as const }}>
+        <div style={{ display: 'flex', justifyContent: 'center', gap: '0.75rem', marginBottom: '1rem', flexWrap: 'wrap' as const }}>
           {socials.map(s => (
             <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer"
               style={{ fontSize: '0.82rem', color: 'var(--ink-muted)', textDecoration: 'none', padding: '0.4rem 1rem', borderRadius: '20px', border: '1.5px solid var(--border)', background: 'var(--bg)', fontWeight: 500 }}>
               {s.label}
             </a>
           ))}
+        </div>
+        <div style={{ marginBottom: '1.25rem' }}>
+          <Link href="/fundacion" style={{ fontSize: '0.82rem', color: 'var(--accent)', textDecoration: 'none', padding: '0.4rem 1rem', borderRadius: '20px', border: '1.5px solid var(--accent-light)', background: 'var(--accent-pale)', fontWeight: 600 }}>
+            Fundaci&#243;n Komuny Social
+          </Link>
         </div>
         <p style={{ fontSize: '0.85rem', color: 'var(--ink-muted)' }}>
           Komuny Edu &mdash; Hecho con amor para docentes de America Latina &middot;{' '}
@@ -424,7 +429,6 @@ export default function Home() {
         @media (max-width: 480px) {
           .site-nav { padding: 0 0.75rem !important; }
           .nav-recursos { display: none !important; }
-          .nav-fundacion { display: none !important; }
           .hero-h1 { font-size: 1.75rem; }
           .hero-right { height: 240px; }
           .hero-stats { gap: 1rem !important; }
