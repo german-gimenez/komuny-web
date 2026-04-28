@@ -3,7 +3,7 @@ import { useState } from 'react';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
-import { BookOpen, Cpu, FileText, GraduationCap, Star, ArrowRight, GitFork, Search, X, Lightbulb, AlertCircle, ChevronDown, Globe, Scale, Shield, Handshake } from 'lucide-react';
+import { BookOpen, Cpu, FileText, GraduationCap, Star, ArrowRight, GitFork, Search, X, Lightbulb, AlertCircle, ChevronDown, Globe, Scale, Shield, Handshake, Wrench } from 'lucide-react';
 import { glossaryTerms, letters, tagColors, GlossaryTerm } from './data/glossary';
 import KomIA from './components/KomIA';
 import TextFlip from './components/TextFlip';
@@ -85,10 +85,11 @@ export default function Home() {
 
   const features = [
     { icon: <BookOpen size={18} />, title: 'Glosario', desc: 'Terminos de IA explicados para educadores.', color: '#D4622A', bg: '#FBE9DF', href: '#glosario', label: 'Ver →', external: false },
+    { icon: <Wrench size={18} />, title: 'Herramientas IA', desc: 'Generador de rubricas, planificador, simplificador de textos y mas.', color: '#8B2FC9', bg: '#F2E8FB', href: '/herramientas', label: 'Usar ahora →', external: false },
     { icon: <Globe size={18} />, title: 'Herramientas gratuitas', desc: 'Canva, Khanmigo, NotebookLM y mas recursos sin costo.', color: '#C9A227', bg: '#FBF3DC', href: 'https://github.com/german-gimenez/komuny/blob/main/recursos/herramientas-gratuitas.md', label: 'Ver lista →', external: true },
     { icon: <Cpu size={18} />, title: 'Skills para Claude', desc: 'Configuraciones especializadas listas para usar en el aula.', color: '#3A6B4A', bg: '#E8F2EC', href: 'https://github.com/german-gimenez/komuny/tree/main/skills', label: 'En GitHub →', external: true },
     { icon: <FileText size={18} />, title: 'Templates de Prompts', desc: 'Tickets listos para planear clases y evaluar.', color: '#1A5C9A', bg: '#E0EDF7', href: 'https://github.com/german-gimenez/komuny/tree/main/templates', label: 'En GitHub →', external: true },
-    { icon: <GraduationCap size={18} />, title: 'Guias paso a paso', desc: 'Desde tu primera clase con IA hasta proyectos de 4 semanas.', color: '#8B2FC9', bg: '#F2E8FB', href: 'https://github.com/german-gimenez/komuny/tree/main/guides', label: 'En GitHub →', external: true },
+    { icon: <GraduationCap size={18} />, title: 'Guias paso a paso', desc: 'Desde tu primera clase con IA hasta proyectos de 4 semanas.', color: '#5C5040', bg: 'var(--bg-warm)', href: 'https://github.com/german-gimenez/komuny/tree/main/guides', label: 'En GitHub →', external: true },
   ];
 
   return (
@@ -101,6 +102,7 @@ export default function Home() {
         </div>
         <div className="nav-links" style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
           <a href="#glosario" style={{ fontSize: '0.88rem', color: 'var(--ink-muted)', textDecoration: 'none', padding: '0.3rem 0.7rem' }}>Glosario</a>
+          <Link href="/herramientas" style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', fontSize: '0.88rem', color: 'var(--accent)', textDecoration: 'none', padding: '0.3rem 0.7rem', fontWeight: 600 }}><Wrench size={13} /> Herramientas</Link>
           <a href="#recursos" className="nav-recursos" style={{ fontSize: '0.88rem', color: 'var(--ink-muted)', textDecoration: 'none', padding: '0.3rem 0.7rem' }}>Recursos</a>
           <Link href="/fundacion" className="nav-fundacion" style={{ fontSize: '0.88rem', color: 'var(--ink-muted)', textDecoration: 'none', padding: '0.3rem 0.7rem' }}>Fundaci&#243;n</Link>
           <a href="https://github.com/german-gimenez/komuny" target="_blank" rel="noopener noreferrer" className="nav-github" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.85rem', textDecoration: 'none', background: 'var(--ink)', color: 'var(--bg)', padding: '0.35rem 0.9rem', borderRadius: '20px', fontWeight: 500 }}>
