@@ -231,7 +231,7 @@ C:\dev_projects\Komuny\komuny        # contenido publico
 
 ---
 
-## Progreso — Ultima sesion (Abril 2026)
+## Progreso — Sesion PWA (Abril 2026)
 
 - [x] 5 herramientas IA para docentes completadas y deployadas
 - [x] API endpoint compartido `/api/herramientas`
@@ -239,6 +239,15 @@ C:\dev_projects\Komuny\komuny        # contenido publico
 - [x] Nav y features section actualizados en home
 - [x] Repo publico actualizado (skills 06-07, guide 06, templates)
 - [x] Merge clean-main → main → Vercel deploy
+- [x] **PWA completa implementada y deployada**
+  - next-pwa v5.6 con Workbox service worker
+  - manifest.json con shortcuts a herramientas principales
+  - 12 iconos PNG (72–512px) + 2 maskable para Android
+  - apple-touch-icon 180x180 + favicons 16/32px para iOS Safari
+  - Pagina offline `/offline` con deteccion de reconexion automatica
+  - Cache strategies: NetworkFirst (pages), CacheFirst (fonts/images), StaleWhileRevalidate (JS/CSS), NetworkOnly (APIs IA)
+  - meta tags completos: viewport, metadataBase, apple-mobile-web-app-capable, theme-color dual, MS Tiles
+  - Deploy: https://komuny-web.vercel.app
 - [ ] Pendiente: configurar dominio custom komuny.org en Vercel si no esta apuntando
 
 ---
