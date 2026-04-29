@@ -4,3 +4,10 @@ package-lock.json
 .env*
 .vercel
 *.log
+
+# PWA — generados en build, no versionar
+public/sw.js
+public/sw.js.map
+public/workbox-*.js
+public/workbox-*.js.map
+public/fallback-*.js
