@@ -6,6 +6,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { BookOpen, Cpu, FileText, GraduationCap, Star, ArrowRight, GitFork, Search, X, Lightbulb, AlertCircle, ChevronDown, Globe, Scale, Shield, Handshake, Wrench } from 'lucide-react';
 import { glossaryTerms, letters, tagColors, GlossaryTerm } from './data/glossary';
 import KomIA from './components/KomIA';
+import NavBar from './components/NavBar';
+import { ScrollProgressBar, BackToTop } from './components/ScrollProgress';
 import TextFlip from './components/TextFlip';
 
 const Globe3D = dynamic(() => import('./components/Globe3D'), {
@@ -94,28 +96,8 @@ export default function Home() {
 
   return (
     <main>
-      {/* NAV */}
-      <nav className="site-nav" style={{ position: 'sticky', top: 0, zIndex: 100, background: 'rgba(245,240,232,0.92)', backdropFilter: 'blur(12px)', borderBottom: '1px solid var(--border)', padding: '0 2rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: '60px' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-          <img src="/favicon.jpg" alt="Komuny" style={{ width: '28px', height: '28px', borderRadius: '6px', objectFit: 'cover' }} />
-          <span style={{ fontFamily: 'Fraunces, serif', fontWeight: 700, fontSize: '1.1rem', whiteSpace: 'nowrap' }}>Komuny Edu</span>
-        </div>
-        <div className="nav-links" style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-          <a href="#glosario" style={{ fontSize: '0.88rem', color: 'var(--ink-muted)', textDecoration: 'none', padding: '0.3rem 0.7rem' }}>Glosario</a>
-          <Link href="/herramientas" style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', fontSize: '0.88rem', color: 'var(--accent)', textDecoration: 'none', padding: '0.3rem 0.7rem', fontWeight: 600 }}><Wrench size={13} /> Herramientas</Link>
-          <a href="#recursos" className="nav-recursos" style={{ fontSize: '0.88rem', color: 'var(--ink-muted)', textDecoration: 'none', padding: '0.3rem 0.7rem' }}>Recursos</a>
-          <Link href="/fundacion" className="nav-fundacion" style={{ fontSize: '0.88rem', color: 'var(--ink-muted)', textDecoration: 'none', padding: '0.3rem 0.7rem' }}>Fundaci&#243;n</Link>
-          <a href="https://github.com/german-gimenez/komuny" target="_blank" rel="noopener noreferrer" className="nav-github" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.85rem', textDecoration: 'none', background: 'var(--ink)', color: 'var(--bg)', padding: '0.35rem 0.9rem', borderRadius: '20px', fontWeight: 500 }}>
-            <GitFork size={14} /> <span className="nav-github-text">GitHub</span>
-          </a>
-          <div className="nav-socials" style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-            <div style={{ width: '1px', height: '18px', background: 'var(--border)', margin: '0 0.25rem' }} />
-            {[{ href: 'https://www.instagram.com/komuny.social/', label: 'IG' }, { href: 'https://www.facebook.com/komuny.social/', label: 'FB' }, { href: 'https://www.linkedin.com/company/komuny/', label: 'LI' }].map(s => (
-              <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" style={{ fontSize: '0.78rem', color: 'var(--ink-muted)', textDecoration: 'none', padding: '0.3rem 0.6rem', borderRadius: '8px', fontWeight: 600, border: '1px solid var(--border)' }}>{s.label}</a>
-            ))}
-          </div>
-        </div>
-      </nav>
+      <NavBar />
+      <ScrollProgressBar />
 
       {/* HERO */}
       <section style={{ position: 'relative', overflow: 'hidden' }}>
@@ -414,12 +396,6 @@ export default function Home() {
         @media (max-width: 768px) {
           .recursos-section { padding: 2rem 1rem !important; }
           .feature-row { padding: 0.85rem 0.75rem; }
-          .site-nav { padding: 0 1rem !important; gap: 0.25rem; }
-          .nav-socials { display: none !important; }
-          .nav-links { gap: 0.25rem !important; }
-          .nav-links a { font-size: 0.8rem !important; padding: 0.25rem 0.5rem !important; }
-          .nav-github { padding: 0.3rem 0.6rem !important; font-size: 0.78rem !important; }
-          .nav-github-text { display: none; }
           .hero-grid { grid-template-columns: 1fr; padding: 3rem 1.25rem 2rem; gap: 0; min-height: unset; }
           .hero-left { text-align: center; max-width: 100%; }
           .hero-h1 { font-size: 2rem; }
@@ -429,8 +405,6 @@ export default function Home() {
           .hero-ctas a { width: 100%; max-width: 260px; justify-content: center; }
         }
         @media (max-width: 480px) {
-          .site-nav { padding: 0 0.75rem !important; }
-          .nav-recursos { display: none !important; }
           .hero-h1 { font-size: 1.75rem; }
           .hero-right { height: 240px; }
           .hero-stats { gap: 1rem !important; }
@@ -439,6 +413,7 @@ export default function Home() {
         .respaldo-badge:hover { border-color: var(--accent-light) !important; box-shadow: 0 2px 12px rgba(212,98,42,0.1); }
       `}</style>
       <KomIA />
+      <BackToTop />
     </main>
   );
 }

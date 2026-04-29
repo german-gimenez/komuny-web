@@ -2,6 +2,8 @@
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import KomIA from '../components/KomIA';
+import NavBar from '../components/NavBar';
+import { ScrollProgressBar, BackToTop } from '../components/ScrollProgress';
 import {
   Shield,
   Scale,
@@ -13,7 +15,6 @@ import {
   Heart,
   ArrowRight,
   ExternalLink,
-  GitFork,
 } from 'lucide-react';
 
 const fadeUp = (delay = 0) => ({
@@ -101,89 +102,8 @@ const stats = [
 export default function FundacionPage() {
   return (
     <main style={{ minHeight: '100vh' }}>
-      {/* NAV */}
-      <nav
-        style={{
-          position: 'sticky',
-          top: 0,
-          zIndex: 100,
-          background: 'rgba(245,240,232,0.92)',
-          backdropFilter: 'blur(12px)',
-          borderBottom: '1px solid var(--border)',
-          padding: '0 2rem',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          height: '60px',
-        }}
-      >
-        <Link
-          href="/"
-          style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', textDecoration: 'none' }}
-        >
-          <img
-            src="/favicon.jpg"
-            alt="Komuny"
-            style={{ width: '28px', height: '28px', borderRadius: '6px', objectFit: 'cover' }}
-          />
-          <span
-            style={{
-              fontFamily: 'Fraunces, serif',
-              fontWeight: 700,
-              fontSize: '1.1rem',
-              whiteSpace: 'nowrap',
-              color: 'var(--ink)',
-            }}
-          >
-            Komuny Edu
-          </span>
-        </Link>
-        <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-          <Link
-            href="/#glosario"
-            style={{ fontSize: '0.88rem', color: 'var(--ink-muted)', textDecoration: 'none', padding: '0.3rem 0.7rem' }}
-          >
-            Glosario
-          </Link>
-          <Link
-            href="/#recursos"
-            style={{ fontSize: '0.88rem', color: 'var(--ink-muted)', textDecoration: 'none', padding: '0.3rem 0.7rem' }}
-          >
-            Recursos
-          </Link>
-          <span
-            style={{
-              fontSize: '0.88rem',
-              color: 'var(--accent)',
-              fontWeight: 600,
-              padding: '0.3rem 0.7rem',
-              borderBottom: '2px solid var(--accent)',
-            }}
-          >
-            Fundaci&#243;n
-          </span>
-          <a
-            href="https://github.com/german-gimenez/komuny"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '0.4rem',
-              fontSize: '0.85rem',
-              textDecoration: 'none',
-              background: 'var(--ink)',
-              color: 'var(--bg)',
-              padding: '0.35rem 0.9rem',
-              borderRadius: '20px',
-              fontWeight: 500,
-            }}
-          >
-            <GitFork size={14} />
-            <span className="nav-github-text">GitHub</span>
-          </a>
-        </div>
-      </nav>
+      <NavBar />
+      <ScrollProgressBar />
 
       {/* HERO */}
       <section style={{ padding: '6rem 2rem 4rem', position: 'relative', overflow: 'hidden' }}>
@@ -624,8 +544,10 @@ export default function FundacionPage() {
                 flexWrap: 'wrap',
               }}
             >
-              <Link
-                href="/guias"
+              <a
+                href="https://github.com/german-gimenez/komuny/tree/main/guides"
+                target="_blank"
+                rel="noopener noreferrer"
                 style={{
                   display: 'inline-flex',
                   alignItems: 'center',
@@ -640,7 +562,7 @@ export default function FundacionPage() {
                 }}
               >
                 <BookOpen size={16} /> Conoc&#233; las gu&#237;as
-              </Link>
+              </a>
               <Link
                 href="/#glosario"
                 style={{
@@ -686,6 +608,7 @@ export default function FundacionPage() {
       </footer>
 
       <style>{`
+        html, body { overflow-x: hidden; max-width: 100vw; }
         .fund-stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.25rem; }
         .fund-how-grid   { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.25rem; }
         .fund-legal-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 0.75rem; }
@@ -695,11 +618,9 @@ export default function FundacionPage() {
           .fund-how-grid   { grid-template-columns: 1fr; }
           .cred-card { flex-direction: column; gap: 1rem; }
         }
-        @media (max-width: 480px) {
-          .nav-github-text { display: none; }
-        }
       `}</style>
       <KomIA />
+      <BackToTop />
     </main>
   );
 }
