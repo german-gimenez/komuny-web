@@ -16,7 +16,10 @@
   --border: #D8D0C0;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 72px; /* sticky nav height (60px) + 12px breathing room */
+}
 body { background-color: var(--bg); color: var(--ink); font-family: 'DM Sans', sans-serif; -webkit-font-smoothing: antialiased; }
 h1,h2,h3,h4 { font-family: 'Fraunces', serif; line-height: 1.15; }
 ::selection { background: var(--accent); color: white; }
