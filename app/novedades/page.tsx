@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { ArrowRight, Calendar, Newspaper } from 'lucide-react';
 import NavBar from '../components/NavBar';
 import KomIA from '../components/KomIA';
+import { ScrollProgressBar, BackToTop } from '../components/ScrollProgress';
 
 const novedades = [
   {
@@ -23,6 +24,7 @@ export default function NovedadesPage() {
   return (
     <main style={{ minHeight: '100vh', background: 'var(--bg)' }}>
       <NavBar />
+      <ScrollProgressBar />
 
       {/* HEADER */}
       <section style={{ padding: '4rem 2rem 2rem', maxWidth: '860px', margin: '0 auto' }}>
@@ -172,6 +174,7 @@ export default function NovedadesPage() {
       </section>
 
       <KomIA />
+      <BackToTop />
     </main>
   );
 }
