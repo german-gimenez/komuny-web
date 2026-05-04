@@ -3,7 +3,7 @@ import { useState } from 'react';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
-import { BookOpen, Cpu, FileText, GraduationCap, Star, ArrowRight, GitFork, Search, X, Lightbulb, AlertCircle, ChevronDown, Globe, Scale, Shield, Handshake, Wrench } from 'lucide-react';
+import { BookOpen, Cpu, FileText, GraduationCap, Star, ArrowRight, GitFork, Search, X, Lightbulb, AlertCircle, ChevronDown, Globe, Scale, Shield, Handshake, Wrench, Newspaper, ExternalLink } from 'lucide-react';
 import { glossaryTerms, letters, tagColors, GlossaryTerm } from './data/glossary';
 import KomIA from './components/KomIA';
 import NavBar from './components/NavBar';
@@ -177,6 +177,93 @@ export default function Home() {
               </a>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* NOVEDADES */}
+      <section id="novedades" style={{ padding: '4rem 2rem', background: 'var(--bg)' }}>
+        <div style={{ maxWidth: '860px', margin: '0 auto' }}>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '2rem', flexWrap: 'wrap', gap: '1rem' }}
+          >
+            <div>
+              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: 'var(--accent-pale)', border: '1px solid var(--accent-light)', padding: '0.3rem 0.9rem', borderRadius: '20px', marginBottom: '0.75rem' }}>
+                <Newspaper size={12} color="var(--accent)" />
+                <span style={{ fontSize: '0.78rem', color: 'var(--accent)', fontWeight: 600, letterSpacing: '0.05em' }}>NOVEDADES</span>
+              </div>
+              <h2 style={{ fontSize: 'clamp(1.5rem, 3vw, 2rem)', marginBottom: '0.3rem', lineHeight: 1.2 }}>Ecosistema educativo</h2>
+              <p style={{ color: 'var(--ink-muted)', fontSize: '0.95rem' }}>Lo que pasa en el ecosistema y como Komuny responde</p>
+            </div>
+            <Link href="/novedades" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.88rem', color: 'var(--accent)', fontWeight: 600, textDecoration: 'none', whiteSpace: 'nowrap' }}>
+              Ver todas <ArrowRight size={14} />
+            </Link>
+          </motion.div>
+
+          {/* Card novedad destacada */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+          >
+            <Link href="/novedades/reinvencion-educativa" style={{ textDecoration: 'none', display: 'block' }}>
+              <div className="novedad-card" style={{
+                background: 'var(--bg-warm)',
+                border: '1.5px solid var(--border)',
+                borderRadius: '16px',
+                padding: '0',
+                overflow: 'hidden',
+                transition: 'border-color 0.2s, box-shadow 0.2s',
+                display: 'grid',
+                gridTemplateColumns: '1fr',
+              }}>
+                {/* Top accent bar */}
+                <div style={{ height: '4px', background: 'linear-gradient(90deg, var(--accent) 0%, var(--accent-light) 100%)' }} />
+                <div style={{ padding: '1.75rem 2rem' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', marginBottom: '1rem', flexWrap: 'wrap' }}>
+                    <span style={{ fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase' as const, padding: '3px 10px', borderRadius: '20px', background: 'var(--accent-pale)', color: 'var(--accent)', border: '1px solid var(--accent-light)' }}>
+                      Ecosistema Educativo
+                    </span>
+                    <span style={{ fontSize: '0.8rem', color: 'var(--ink-muted)' }}>Mayo 2026</span>
+                  </div>
+
+                  <h3 style={{ fontFamily: 'Fraunces, serif', fontSize: 'clamp(1.15rem, 2.5vw, 1.55rem)', fontWeight: 700, color: 'var(--ink)', lineHeight: 1.25, marginBottom: '0.85rem' }}>
+                    "El sistema educativo no esta en crisis. Esta cumpliendo para lo que fue disenado. Y ese es el problema."
+                  </h3>
+
+                  <p style={{ fontSize: '0.92rem', color: 'var(--ink-muted)', lineHeight: 1.65, marginBottom: '1.25rem' }}>
+                    Facundo Vazquez plantea el diagnostico que resuena con nuestra mision: el modelo educativo industrial ya se fracturo.
+                    Lo que viene no es una reforma —es una reinvencion. Desde Komuny colaboramos con herramientas concretas para que
+                    esa reinvencion empiece hoy, en el aula.
+                  </p>
+
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '0.75rem' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                      <span style={{ fontSize: '0.82rem', color: 'var(--ink-muted)', fontStyle: 'italic' }}>Contexto: nota de Facundo Vazquez · Respuesta Komuny</span>
+                    </div>
+                    <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+                      <a
+                        href="https://www.linkedin.com/posts/facundovazquez_el-sistema-educativo-no-est%C3%A1-en-crisis-est%C3%A1-share-7453405164482445312-gjH1/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={e => e.stopPropagation()}
+                        style={{ display: 'inline-flex', alignItems: 'center', gap: '0.3rem', fontSize: '0.82rem', color: 'var(--ink-muted)', textDecoration: 'none', padding: '0.35rem 0.85rem', borderRadius: '20px', border: '1.5px solid var(--border)', background: 'var(--bg)', fontWeight: 500 }}
+                      >
+                        <ExternalLink size={12} /> LinkedIn original
+                      </a>
+                      <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.3rem', fontSize: '0.88rem', color: 'var(--accent)', fontWeight: 600 }}>
+                        Leer nota <ArrowRight size={14} />
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </Link>
+          </motion.div>
         </div>
       </section>
 
@@ -411,6 +498,7 @@ export default function Home() {
         }
         .respaldo-badges { display: flex; flex-wrap: wrap; gap: 0.75rem; justify-content: center; }
         .respaldo-badge:hover { border-color: var(--accent-light) !important; box-shadow: 0 2px 12px rgba(212,98,42,0.1); }
+        .novedad-card:hover { border-color: var(--accent-light) !important; box-shadow: 0 4px 20px rgba(212,98,42,0.1); }
       `}</style>
       <KomIA />
       <BackToTop />

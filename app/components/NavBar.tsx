@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { GitFork, Wrench, Menu, X } from 'lucide-react';
+import { GitFork, Wrench, Menu, X, Newspaper } from 'lucide-react';
 
 export default function NavBar() {
   const pathname = usePathname();
@@ -30,6 +30,7 @@ export default function NavBar() {
     { href: '/herramientas', label: 'Herramientas', icon: <Wrench size={13} />, accent: true },
     { href: '/#glosario', label: 'Glosario', anchor: true },
     { href: '/#recursos', label: 'Recursos', anchor: true },
+    { href: '/novedades', label: 'Novedades', icon: <Newspaper size={13} /> },
     { href: '/fundacion', label: 'Fundación' },
   ];
 
