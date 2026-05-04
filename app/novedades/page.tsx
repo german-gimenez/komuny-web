@@ -5,6 +5,7 @@ import { ArrowRight, Calendar, Newspaper } from 'lucide-react';
 import NavBar from '../components/NavBar';
 import KomIA from '../components/KomIA';
 import { ScrollProgressBar, BackToTop } from '../components/ScrollProgress';
+import SiteFooter from '../components/SiteFooter';
 
 const novedades = [
   {
@@ -152,27 +153,9 @@ export default function NovedadesPage() {
           ))}
         </div>
 
-        <div style={{ marginTop: '4rem', paddingTop: '2rem', borderTop: '1px solid var(--border)', textAlign: 'center' }}>
-          <p style={{ fontSize: '0.9rem', color: 'var(--ink-muted)', marginBottom: '1rem' }}>
-            Komuny Edu · Hecho para docentes de America Latina
-          </p>
-          <Link
-            href="/"
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '0.4rem',
-              fontSize: '0.88rem',
-              color: 'var(--accent)',
-              textDecoration: 'none',
-              fontWeight: 600,
-            }}
-          >
-            Volver al inicio <ArrowRight size={14} />
-          </Link>
-        </div>
       </section>
 
+      <SiteFooter />
       <KomIA />
       <BackToTop />
     </main>
