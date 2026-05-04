@@ -56,6 +56,21 @@ git push origin main
 
 ---
 
+## Componentes UI Estandar — Siempre presentes
+
+| Componente | Archivo | Obligatorio en |
+|-----------|---------|----------------|
+| `<NavBar />` | `components/NavBar.tsx` | Todas las páginas |
+| `<ScrollProgressBar />` | `components/ScrollProgress.tsx` | Todas las páginas |
+| `<SiteFooter />` | `components/SiteFooter.tsx` | **Todas las páginas** (o via ToolLayout) |
+| `<KomIA />` | `components/KomIA.tsx` | Todas las páginas excepto /offline |
+| `<BackToTop />` | `components/ScrollProgress.tsx` | Todas las páginas excepto /offline |
+
+`ToolLayout` incluye NavBar + ScrollProgressBar + SiteFooter + KomIA + BackToTop.
+Páginas que usan `ToolLayout` no necesitan agregarlos manualmente.
+
+---
+
 ## Correspondencia Web → Contenido Publico
 
 | Feature en `komuny-web` | Equivalente en `komuny` |
@@ -196,6 +211,43 @@ Para agregar una nueva herramienta:
 6. Agregar templates en `templates/templates-herramientas-ia.md`
 7. Actualizar `guides/06-herramientas-ia-komuny.md`
 8. Actualizar `README.md` del repo publico
+
+---
+
+## REGLA OBLIGATORIA — Footer en todas las páginas
+
+**NUNCA crear una pagina sin `<SiteFooter />`.**
+
+Todo `page.tsx` nuevo o `layout.tsx` de ruta debe incluir el componente estandar:
+
+```tsx
+import SiteFooter from '@/app/components/SiteFooter';
+// ...
+<SiteFooter />
+```
+
+### Patron obligatorio para nuevas paginas standalone (sin ToolLayout):
+```tsx
+<main>
+  <NavBar />
+  <ScrollProgressBar />
+  {/* contenido */}
+  <SiteFooter />   {/* ← SIEMPRE */}
+  <KomIA />
+  <BackToTop />
+</main>
+```
+
+### Paginas que ya usan ToolLayout:
+ToolLayout incluye `<SiteFooter />` internamente. No agregar doble footer.
+
+### Checklist al crear nueva pagina:
+- [ ] `<NavBar />` presente
+- [ ] `<ScrollProgressBar />` presente
+- [ ] `<SiteFooter />` presente (o via ToolLayout)
+- [ ] `<KomIA />` presente
+- [ ] `<BackToTop />` presente
+- [ ] Layout con `metadata` SEO si la ruta es nueva
 
 ---
 

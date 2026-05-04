@@ -5,6 +5,7 @@ import { ArrowLeft, ExternalLink, Calendar, Quote, BookOpen, Wrench, GitFork } f
 import NavBar from '../../components/NavBar';
 import KomIA from '../../components/KomIA';
 import { ScrollProgressBar, BackToTop } from '../../components/ScrollProgress';
+import SiteFooter from '../../components/SiteFooter';
 
 export default function ReinvencionEducativa() {
   return (
@@ -285,7 +286,7 @@ export default function ReinvencionEducativa() {
       </motion.section>
 
       {/* FOOTER NAV */}
-      <section style={{ padding: '2rem', maxWidth: '760px', margin: '0 auto', borderTop: '1px solid var(--border)' }}>
+      <section style={{ padding: '1.5rem 2rem 0', maxWidth: '760px', margin: '0 auto' }}>
         <Link
           href="/novedades"
           style={{
@@ -302,6 +303,7 @@ export default function ReinvencionEducativa() {
         </Link>
       </section>
 
+      <SiteFooter />
       <KomIA />
       <BackToTop />
     </main>
