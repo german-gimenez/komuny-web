@@ -247,7 +247,7 @@ export default function Home() {
                     </div>
                     <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
                       <a
-                        href="https://www.linkedin.com/posts/facundovazquez_el-sistema-educativo-no-est%C3%A1-en-crisis-est%C3%A1-share-7453405164482445312-gjH1/"
+                        href="https://www.linkedin.com/posts/facundovazquez_el-sistema-educativo-no-est%C3%A1-en-crisis-est%C3%A1-share-7453405164482445312-gjH1/?utm_source=share"
                         target="_blank"
                         rel="noopener noreferrer"
                         onClick={e => e.stopPropagation()}

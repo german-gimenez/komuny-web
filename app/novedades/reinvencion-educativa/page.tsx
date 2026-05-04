@@ -4,11 +4,13 @@ import { motion } from 'framer-motion';
 import { ArrowLeft, ExternalLink, Calendar, Quote, BookOpen, Wrench, GitFork } from 'lucide-react';
 import NavBar from '../../components/NavBar';
 import KomIA from '../../components/KomIA';
+import { ScrollProgressBar, BackToTop } from '../../components/ScrollProgress';
 
 export default function ReinvencionEducativa() {
   return (
     <main style={{ minHeight: '100vh', background: 'var(--bg)' }}>
       <NavBar />
+      <ScrollProgressBar />
 
       {/* HEADER ARTICLE */}
       <section style={{ padding: '3rem 2rem 0', maxWidth: '760px', margin: '0 auto' }}>
@@ -40,7 +42,7 @@ export default function ReinvencionEducativa() {
               fontSize: '0.72rem',
               fontWeight: 700,
               letterSpacing: '0.08em',
-              textTransform: 'uppercase',
+              textTransform: 'uppercase' as const,
               padding: '3px 10px',
               borderRadius: '20px',
               background: 'var(--accent-pale)',
@@ -259,7 +261,7 @@ export default function ReinvencionEducativa() {
               </p>
             </div>
             <a
-              href="https://www.linkedin.com/posts/facundovazquez_el-sistema-educativo-no-est%C3%A1-en-crisis-est%C3%A1-share-7453405164482445312-gjH1/"
+              href="https://www.linkedin.com/posts/facundovazquez_el-sistema-educativo-no-est%C3%A1-en-crisis-est%C3%A1-share-7453405164482445312-gjH1/?utm_source=share"
               target="_blank"
               rel="noopener noreferrer"
               style={{
@@ -301,6 +303,7 @@ export default function ReinvencionEducativa() {
       </section>
 
       <KomIA />
+      <BackToTop />
     </main>
   );
 }

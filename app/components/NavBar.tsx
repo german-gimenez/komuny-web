@@ -97,6 +97,9 @@ export default function NavBar() {
                 key={link.href}
                 href={link.href}
                 style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.3rem',
                   fontSize: '0.88rem',
                   color: active ? 'var(--ink)' : 'var(--ink-muted)',
                   textDecoration: 'none',
@@ -109,6 +112,7 @@ export default function NavBar() {
                 onMouseEnter={e => { e.currentTarget.style.color = 'var(--ink)'; e.currentTarget.style.background = 'var(--bg-warm)'; }}
                 onMouseLeave={e => { e.currentTarget.style.color = active ? 'var(--ink)' : 'var(--ink-muted)'; e.currentTarget.style.background = 'transparent'; }}
               >
+                {link.icon && <span style={{ display: 'flex', opacity: 0.7 }}>{link.icon}</span>}
                 {link.label}
               </Link>
             );
