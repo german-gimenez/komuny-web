@@ -56,12 +56,28 @@ export default function NavBar() {
           boxShadow: scrolled ? '0 1px 16px rgba(26,18,8,0.08)' : 'none',
         }}
       >
-        {/* LOGO */}
-        <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', textDecoration: 'none', flexShrink: 0 }}>
-          <img src="/icons/icon-192x192.png" alt="Komuny" style={{ width: '32px', height: '32px', objectFit: 'contain' }} />
-          <span style={{ fontFamily: 'Fraunces, serif', fontWeight: 700, fontSize: '1.1rem', color: 'var(--ink)', whiteSpace: 'nowrap' }}>
-            Komuny Edu
-          </span>
+        {/* LOGO — wordmark color oficial */}
+        <Link
+          href="/"
+          style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            textDecoration: 'none',
+            flexShrink: 0,
+          }}
+          aria-label="Komuny — Inicio"
+        >
+          <img
+            src="/komuny-logo-color.png"
+            alt="Komuny"
+            style={{
+              height: '34px',
+              width: 'auto',
+              maxWidth: '160px',
+              objectFit: 'contain',
+              display: 'block',
+            }}
+          />
         </Link>
 
         {/* DESKTOP LINKS */}

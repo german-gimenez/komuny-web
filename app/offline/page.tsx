@@ -37,32 +37,19 @@ export default function OfflinePage() {
         fontFamily: 'DM Sans, system-ui, sans-serif',
       }}
     >
-      {/* Logo K */}
-      <div
+      {/* Logo Komuny color */}
+      <img
+        src="/komuny-logo-color.png"
+        alt="Komuny"
         style={{
-          width: 96,
-          height: 96,
-          borderRadius: 20,
-          backgroundColor: '#D4622A',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
+          height: '64px',
+          width: 'auto',
+          maxWidth: '260px',
+          objectFit: 'contain',
           marginBottom: '2rem',
-          boxShadow: '0 8px 32px rgba(212, 98, 42, 0.25)',
+          display: 'block',
         }}
-      >
-        <span
-          style={{
-            fontSize: 56,
-            fontWeight: 900,
-            color: '#F5F0E8',
-            lineHeight: 1,
-            fontFamily: 'Arial Black, sans-serif',
-          }}
-        >
-          K
-        </span>
-      </div>
+      />
 
       {/* Titulo */}
       <h1
