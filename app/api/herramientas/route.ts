@@ -1,9 +1,32 @@
 import { streamText } from 'ai';
-import { gateway } from '@ai-sdk/gateway';
+import { bedrock } from '@ai-sdk/amazon-bedrock';
+import {
+  DEFAULT_TOOLS_MODEL,
+  resolveModelId,
+} from '../../../lib/bedrock-models';
 
-type Herramienta = 'rubrica' | 'planificador' | 'simplificador' | 'detector-sesgos' | 'preguntas';
+export const runtime = 'nodejs';
+export const maxDuration = 60;
 
-function buildPrompt(herramienta: Herramienta, datos: Record<string, string>): string {
+type Herramienta =
+  | 'rubrica'
+  | 'planificador'
+  | 'simplificador'
+  | 'detector-sesgos'
+  | 'preguntas';
+
+const ALLOWED: Herramienta[] = [
+  'rubrica',
+  'planificador',
+  'simplificador',
+  'detector-sesgos',
+  'preguntas',
+];
+
+function buildPrompt(
+  herramienta: Herramienta,
+  datos: Record<string, string>,
+): string {
   switch (herramienta) {
     case 'rubrica':
       return `Eres un experto en evaluación educativa para América Latina. Genera una rúbrica completa y lista para usar en el aula.
@@ -249,28 +272,48 @@ Respondé en español. Asegurate de que las preguntas sean apropiadas para ${dat
   }
 }
 
+interface HerramientaBody {
+  herramienta: Herramienta;
+  datos: Record<string, string>;
+  modelId?: string;
+}
+
 export async function POST(req: Request) {
+  let body: HerramientaBody;
   try {
-    const { herramienta, datos } = await req.json() as {
-      herramienta: Herramienta;
-      datos: Record<string, string>;
-    };
+    body = (await req.json()) as HerramientaBody;
+  } catch {
+    return jsonError(400, 'invalid_json', 'El cuerpo de la petición no es JSON válido.');
+  }
 
-    if (!herramienta || !datos) {
-      return new Response(
-        JSON.stringify({ error: 'Faltan parámetros: herramienta y datos son requeridos' }),
-        { status: 400, headers: { 'Content-Type': 'application/json' } }
-      );
-    }
+  const { herramienta, datos, modelId } = body;
 
-    const prompt = buildPrompt(herramienta, datos);
+  if (!herramienta || !datos) {
+    return jsonError(
+      400,
+      'missing_params',
+      'Faltan parámetros: herramienta y datos son requeridos.',
+    );
+  }
 
+  if (!ALLOWED.includes(herramienta)) {
+    return jsonError(
+      400,
+      'invalid_herramienta',
+      `Herramienta no válida. Permitidas: ${ALLOWED.join(', ')}.`,
+    );
+  }
+
+  const resolvedModel = resolveModelId(modelId, DEFAULT_TOOLS_MODEL);
+  const prompt = buildPrompt(herramienta, datos);
+
+  try {
     const result = streamText({
-      model: gateway('zai/glm-4.7-flash'),
-      system: `Eres un asistente educativo de Komuny Edu, creado por Napsix.AI para docentes de América Latina. 
-Respondés siempre en español, con tono profesional, cálido y práctico. 
+      model: bedrock(resolvedModel),
+      system: `Eres un asistente educativo de Komuny Edu, creado por Napsix.AI para docentes de América Latina.
+Respondés siempre en español, con tono profesional, cálido y práctico.
 Usás formato Markdown para estructurar tus respuestas (headers ##, tablas, listas).
-Nunca usás separadores --- o ___. 
+Nunca usás separadores --- o ___.
 Priorizás ejemplos y contextos relevantes para América Latina.`,
       prompt,
       maxOutputTokens: 4000,
@@ -278,11 +321,58 @@ Priorizás ejemplos y contextos relevantes para América Latina.`,
 
     return result.toTextStreamResponse();
   } catch (error) {
-    console.error('[Herramientas API error]', error);
-    const message = error instanceof Error ? error.message : 'Error desconocido';
-    return new Response(
-      JSON.stringify({ error: 'Error al generar el contenido', detail: message }),
-      { status: 500, headers: { 'Content-Type': 'application/json' } }
+    return logAndRespond(error, resolvedModel, herramienta);
+  }
+}
+
+// ──────────────────────────────────────────────────────────────────
+// HELPERS
+// ──────────────────────────────────────────────────────────────────
+
+function jsonError(status: number, code: string, detail: string) {
+  return new Response(JSON.stringify({ error: code, detail }), {
+    status,
+    headers: { 'Content-Type': 'application/json' },
+  });
+}
+
+function logAndRespond(error: unknown, modelId: string, herramienta?: string) {
+  const err = error as { name?: string; message?: string; statusCode?: number };
+  const name = err?.name ?? 'UnknownError';
+  const message = err?.message ?? 'Error desconocido';
+
+  console.error('[Herramientas API error]', {
+    herramienta,
+    modelId,
+    name,
+    message,
+    statusCode: err?.statusCode,
+  });
+
+  if (name === 'AccessDeniedException' || /access denied/i.test(message)) {
+    return jsonError(
+      403,
+      'bedrock_access_denied',
+      'Permiso denegado para invocar el modelo en Bedrock.',
     );
   }
+  if (name === 'ThrottlingException' || /throttl/i.test(message)) {
+    return jsonError(
+      429,
+      'bedrock_throttling',
+      'Demasiadas peticiones a Bedrock. Reintenta en unos segundos.',
+    );
+  }
+  if (name === 'ValidationException' || /validation/i.test(message)) {
+    return jsonError(400, 'bedrock_validation', `Petición inválida: ${message}`);
+  }
+  if (name === 'CredentialsProviderError' || /credentials/i.test(message)) {
+    return jsonError(
+      500,
+      'bedrock_no_credentials',
+      'Credenciales AWS no configuradas en el servidor.',
+    );
+  }
+
+  return jsonError(500, 'bedrock_unknown', message);
 }

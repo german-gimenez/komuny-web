@@ -108,6 +108,9 @@ app/
 │   └── TextFlip.tsx            ← Animacion de palabras en hero
 └── data/
     └── glossary.ts             ← Terminos del glosario (estatico)
+
+lib/
+└── bedrock-models.ts           ← Catalogo de modelos Claude en AWS Bedrock + defaults
 ```
 
 ---
@@ -156,7 +159,10 @@ komuny/
 | UI | React 19 + Framer Motion + Tailwind CSS |
 | 3D | Three.js + React Three Fiber |
 | AI SDK | Vercel AI SDK v6 (`ai`, `@ai-sdk/react`) |
-| Modelo IA | `zai/glm-4.7-flash` via `@ai-sdk/gateway` |
+| Proveedor IA | **AWS Bedrock** via `@ai-sdk/amazon-bedrock` (us-east-1) |
+| Modelo chat (KomIA) | `us.anthropic.claude-haiku-4-5-20251001-v1:0` (Claude Haiku 4.5) |
+| Modelo herramientas | `us.anthropic.claude-sonnet-4-5-20250929-v1:0` (Claude Sonnet 4.5) |
+| Catálogo modelos | `lib/bedrock-models.ts` — Haiku, Sonnet y Opus disponibles |
 | Deploy | Vercel (proyecto: `napsixai/komuny-web`) |
 | Dominio | komuny.org |
 
@@ -278,8 +284,37 @@ C:\dev_projects\Komuny\komuny        # contenido publico
 - **Vercel proyecto:** `napsixai/komuny-web`
 - **GitHub repos:** `german-gimenez/komuny-web` (privado) + `german-gimenez/komuny` (publico)
 - **Dominio:** komuny.org → apunta a Vercel
-- **AI Gateway:** `zai/glm-4.7-flash` via `@ai-sdk/gateway`
-- Todas las credenciales en variables de entorno de Windows (ver CLAUDE.md global)
+- **AWS Bedrock:** us-east-1, IAM user `cursor-windsurf-bedrock` (account 939068522139)
+  - Modelos Claude disponibles: Haiku 4.5, Sonnet 4.5/4.6, Opus 4.5/4.6/4.7
+  - Defaults: Haiku 4.5 para KomIA chat, Sonnet 4.5 para herramientas
+  - Variables de entorno en Vercel: `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_REGION`
+  - Override opcional: `BEDROCK_MODEL_CHAT`, `BEDROCK_MODEL_TOOLS`
+- Credenciales locales: `.env.local` (gitignored) — para producción ver Vercel env vars
+- Todas las demas credenciales en variables de entorno de Windows (ver CLAUDE.md global)
+
+---
+
+## Progreso — Sesion Bedrock + KomIA tools (Mayo 2026)
+
+- [x] **Migracion AI Gateway → AWS Bedrock** (causa del error de conexion de KomIA)
+  - Reemplazado `@ai-sdk/gateway` por `@ai-sdk/amazon-bedrock` en `/api/chat` y `/api/herramientas`
+  - Modelo chat: Claude Haiku 4.5 (`us.anthropic.claude-haiku-4-5-20251001-v1:0`)
+  - Modelo herramientas: Claude Sonnet 4.5 (`us.anthropic.claude-sonnet-4-5-20250929-v1:0`)
+  - Catalogo completo de modelos en `lib/bedrock-models.ts` (Haiku/Sonnet/Opus 4.5-4.7)
+  - Forzado `runtime = 'nodejs'` y `maxDuration = 60` para soportar AWS SigV4
+- [x] **Tools nuevas de KomIA chat:**
+  - `buscar_termino` — glosario (existia)
+  - `listar_recursos` — recursos documentales (existia)
+  - **`listar_herramientas`** (nueva) — devuelve las 5 herramientas IA con URLs
+  - **`info_fundacion`** (nueva) — info institucional (CUIT, declaracion legislativa, oferta)
+- [x] **Manejo de errores robusto:**
+  - Mapeo de errores Bedrock (AccessDenied, Throttling, Validation, NoCredentials) → HTTP + codigos
+  - KomIA.tsx parsea el error y muestra mensaje claro al usuario
+- [x] **Validacion anti-tampering:**
+  - `resolveModelId()` filtra `modelId` arbitrario del cliente contra whitelist
+  - Validacion de herramientas permitidas en `/api/herramientas`
+- [x] Build ✓ + 46 tests ✓ + E2E manual ✓ (chat, herramientas, todas las tools)
+- [x] Vercel env vars: `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_REGION` configuradas
 
 ---
 
