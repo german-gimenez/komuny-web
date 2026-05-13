@@ -7,13 +7,14 @@
  * Al crear una nueva pagina o layout, siempre importar y agregar <SiteFooter />.
  *
  * Incluye:
+ * - Logo Komuny (isologo a color)
  * - Links a redes sociales
- * - Link a Fundacion Komuny Social
- * - Link a Novedades
- * - Credito Napsix.AI
+ * - Links internos (Chat, Fundaciones, Herramientas, Novedades, Fundacion Komuny)
+ * - Credito "Built with Anthropic" + "Desarrollado por Napsix.AI"
  */
 
 import Link from 'next/link';
+import { AnthropicBadgeInline } from './AnthropicBadge';
 
 const socials = [
   { href: 'https://www.instagram.com/komuny.social/', label: 'Instagram' },
@@ -23,28 +24,57 @@ const socials = [
 ];
 
 const internalLinks = [
-  { href: '/fundacion', label: 'Fundación Komuny Social' },
-  { href: '/novedades', label: 'Novedades' },
+  { href: '/chat', label: 'Komuny Chat', highlight: true },
+  { href: '/para-fundaciones', label: 'Para Fundaciones', highlight: true },
   { href: '/herramientas', label: 'Herramientas IA' },
+  { href: '/fundacion', label: 'Fundacion Komuny Social' },
+  { href: '/novedades', label: 'Novedades' },
 ];
 
 export default function SiteFooter() {
   return (
     <footer
       style={{
-        padding: '2.5rem 2rem',
+        padding: '2.75rem 2rem 2rem',
         textAlign: 'center',
         borderTop: '1px solid var(--border)',
         background: 'var(--bg-warm)',
         marginTop: 'auto',
       }}
     >
+      {/* Logo + tagline */}
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          gap: '0.5rem',
+          marginBottom: '1.5rem',
+        }}
+      >
+        <Link href="/" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.55rem', textDecoration: 'none' }}>
+          <img
+            src="/icons/icon-192x192.png"
+            alt="Komuny"
+            width={32}
+            height={32}
+            style={{ width: '32px', height: '32px', objectFit: 'contain' }}
+          />
+          <span style={{ fontFamily: 'Fraunces, serif', fontWeight: 700, fontSize: '1.15rem', color: 'var(--ink)' }}>
+            Komuny Edu
+          </span>
+        </Link>
+        <span style={{ fontSize: '0.85rem', color: 'var(--ink-muted)' }}>
+          IA para educadores y fundaciones de LATAM
+        </span>
+      </div>
+
       {/* Redes sociales */}
       <div
         style={{
           display: 'flex',
           justifyContent: 'center',
-          gap: '0.6rem',
+          gap: '0.5rem',
           marginBottom: '1rem',
           flexWrap: 'wrap',
         }}
@@ -56,10 +86,10 @@ export default function SiteFooter() {
             target="_blank"
             rel="noopener noreferrer"
             style={{
-              fontSize: '0.82rem',
+              fontSize: '0.8rem',
               color: 'var(--ink-muted)',
               textDecoration: 'none',
-              padding: '0.4rem 1rem',
+              padding: '0.35rem 0.9rem',
               borderRadius: '20px',
               border: '1.5px solid var(--border)',
               background: 'var(--bg)',
@@ -85,8 +115,8 @@ export default function SiteFooter() {
         style={{
           display: 'flex',
           justifyContent: 'center',
-          gap: '0.6rem',
-          marginBottom: '1.25rem',
+          gap: '0.5rem',
+          marginBottom: '1.5rem',
           flexWrap: 'wrap',
         }}
       >
@@ -95,17 +125,17 @@ export default function SiteFooter() {
             key={l.href}
             href={l.href}
             style={{
-              fontSize: '0.82rem',
-              color: 'var(--accent)',
+              fontSize: '0.8rem',
+              color: l.highlight ? 'var(--accent)' : 'var(--ink-muted)',
               textDecoration: 'none',
-              padding: '0.4rem 1rem',
+              padding: '0.35rem 0.9rem',
               borderRadius: '20px',
-              border: '1.5px solid var(--accent-light)',
-              background: 'var(--accent-pale)',
-              fontWeight: 600,
+              border: `1.5px solid ${l.highlight ? 'var(--accent-light)' : 'var(--border)'}`,
+              background: l.highlight ? 'var(--accent-pale)' : 'var(--bg)',
+              fontWeight: l.highlight ? 600 : 500,
               transition: 'opacity 0.15s',
             }}
-            onMouseEnter={e => { e.currentTarget.style.opacity = '0.8'; }}
+            onMouseEnter={e => { e.currentTarget.style.opacity = '0.85'; }}
             onMouseLeave={e => { e.currentTarget.style.opacity = '1'; }}
           >
             {l.label}
@@ -113,17 +143,51 @@ export default function SiteFooter() {
         ))}
       </div>
 
+      {/* Built with Anthropic + Napsix */}
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          gap: '1rem',
+          marginBottom: '1rem',
+          flexWrap: 'wrap',
+        }}
+      >
+        <AnthropicBadgeInline color="var(--ink-muted)" />
+        <span
+          aria-hidden="true"
+          style={{ width: '4px', height: '4px', borderRadius: '50%', background: 'var(--border)' }}
+        />
+        <span style={{ fontSize: '0.78rem', color: 'var(--ink-muted)' }}>
+          Desarrollado por{' '}
+          <a
+            href="https://napsix.ai"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ color: 'var(--accent)', textDecoration: 'none', fontWeight: 600 }}
+          >
+            Napsix.AI
+          </a>
+        </span>
+      </div>
+
       {/* Credito */}
-      <p style={{ fontSize: '0.85rem', color: 'var(--ink-muted)' }}>
+      <p style={{ fontSize: '0.78rem', color: 'var(--ink-muted)' }}>
         Komuny Edu &mdash; Hecho con amor para docentes de Am&eacute;rica Latina &middot;{' '}
-        <a
-          href="https://napsix.ai"
-          target="_blank"
-          rel="noopener noreferrer"
-          style={{ color: 'var(--accent)', textDecoration: 'none', fontWeight: 500 }}
+        <Link
+          href="/privacidad"
+          style={{ color: 'var(--ink-muted)', textDecoration: 'none', fontWeight: 500 }}
         >
-          Napsix.AI
-        </a>
+          Privacidad
+        </Link>{' '}
+        &middot;{' '}
+        <Link
+          href="/terminos"
+          style={{ color: 'var(--ink-muted)', textDecoration: 'none', fontWeight: 500 }}
+        >
+          Terminos
+        </Link>
       </p>
     </footer>
   );

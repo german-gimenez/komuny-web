@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { GitFork, Wrench, Menu, X, Newspaper } from 'lucide-react';
+import { GitFork, Wrench, Menu, X, Newspaper, MessageSquare, Building2 } from 'lucide-react';
 
 export default function NavBar() {
   const pathname = usePathname();
@@ -27,9 +27,10 @@ export default function NavBar() {
   };
 
   const navLinks = [
-    { href: '/herramientas', label: 'Herramientas', icon: <Wrench size={13} />, accent: true },
+    { href: '/chat', label: 'Chat', icon: <MessageSquare size={13} />, accent: true, badge: 'Nuevo' as const },
+    { href: '/herramientas', label: 'Herramientas', icon: <Wrench size={13} /> },
     { href: '/#glosario', label: 'Glosario', anchor: true },
-    { href: '/#recursos', label: 'Recursos', anchor: true },
+    { href: '/para-fundaciones', label: 'Para Fundaciones', icon: <Building2 size={13} /> },
     { href: '/novedades', label: 'Novedades', icon: <Newspaper size={13} /> },
     { href: '/fundacion', label: 'Fundación' },
   ];
@@ -89,6 +90,23 @@ export default function NavBar() {
                   onMouseLeave={e => { if (!active) e.currentTarget.style.background = 'transparent'; }}
                 >
                   {link.icon} {link.label}
+                  {'badge' in link && link.badge && (
+                    <span
+                      style={{
+                        fontSize: '0.6rem',
+                        fontWeight: 700,
+                        letterSpacing: '0.08em',
+                        textTransform: 'uppercase' as const,
+                        padding: '1px 6px',
+                        borderRadius: '20px',
+                        background: 'var(--accent)',
+                        color: 'white',
+                        lineHeight: 1.3,
+                      }}
+                    >
+                      {link.badge}
+                    </span>
+                  )}
                 </Link>
               );
             }
