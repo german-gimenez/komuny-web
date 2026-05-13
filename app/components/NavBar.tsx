@@ -57,7 +57,7 @@ export default function NavBar() {
       >
         {/* LOGO */}
         <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', textDecoration: 'none', flexShrink: 0 }}>
-          <img src="/favicon.jpg" alt="Komuny" style={{ width: '28px', height: '28px', borderRadius: '6px', objectFit: 'cover' }} />
+          <img src="/icons/icon-192x192.png" alt="Komuny" style={{ width: '32px', height: '32px', objectFit: 'contain' }} />
           <span style={{ fontFamily: 'Fraunces, serif', fontWeight: 700, fontSize: '1.1rem', color: 'var(--ink)', whiteSpace: 'nowrap' }}>
             Komuny Edu
           </span>

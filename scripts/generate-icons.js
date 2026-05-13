@@ -1,73 +1,125 @@
+// =====================================================================
+// Komuny Edu - Generador de iconos PWA / favicon / apple-touch
+// =====================================================================
+// Genera todos los iconos desde el isologo real de Komuny
+// Source: public/komuny-ods-wheel-transparent.png (las personitas multicolor)
+//
+// Ejecutar: node scripts/generate-icons.js
+// =====================================================================
 const sharp = require('sharp');
 const fs = require('fs');
 const path = require('path');
 
-// SVG del logo Komuny — K con colores de marca terracota
-const svgIcon = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <rect width="512" height="512" rx="80" fill="#D4622A"/>
-  <text x="256" y="345" font-family="Arial Black, Arial, sans-serif" font-size="320" font-weight="900" text-anchor="middle" fill="#F5F0E8">K</text>
-</svg>`;
+const SOURCE_ISOLOGO = path.join(__dirname, '..', 'public', 'komuny-ods-wheel-transparent.png');
+const publicDir = path.join(__dirname, '..', 'public');
+const iconsDir = path.join(publicDir, 'icons');
 
-const svgMaskable = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <rect width="512" height="512" fill="#D4622A"/>
-  <text x="256" y="345" font-family="Arial Black, Arial, sans-serif" font-size="280" font-weight="900" text-anchor="middle" fill="#F5F0E8">K</text>
-</svg>`;
-
+// Tamaños estándar PWA + iOS + Android
 const sizes = [72, 96, 128, 144, 152, 180, 192, 256, 384, 512];
-const iconsDir = path.join(__dirname, '..', 'public', 'icons');
 
 if (!fs.existsSync(iconsDir)) {
   fs.mkdirSync(iconsDir, { recursive: true });
 }
 
-const svgBuffer = Buffer.from(svgIcon);
-const svgMaskableBuffer = Buffer.from(svgMaskable);
+if (!fs.existsSync(SOURCE_ISOLOGO)) {
+  console.error(`ERROR: source no encontrado: ${SOURCE_ISOLOGO}`);
+  process.exit(1);
+}
+
+console.log(`Generando iconos desde: ${path.basename(SOURCE_ISOLOGO)}\n`);
 
 async function main() {
-  // Iconos estandar
+  // 1. Iconos estandar PWA (fondo transparente, isologo centrado)
+  // Padding del 12% para que el isologo no toque los bordes en displays redondos
   for (const size of sizes) {
-    await sharp(svgBuffer)
-      .resize(size, size)
+    const padding = Math.round(size * 0.12);
+    const inner = size - padding * 2;
+
+    await sharp(SOURCE_ISOLOGO)
+      .resize(inner, inner, {
+        fit: 'contain',
+        background: { r: 0, g: 0, b: 0, alpha: 0 },
+      })
+      .extend({
+        top: padding,
+        bottom: padding,
+        left: padding,
+        right: padding,
+        background: { r: 0, g: 0, b: 0, alpha: 0 },
+      })
       .png()
       .toFile(path.join(iconsDir, `icon-${size}x${size}.png`));
-    console.log(`OK icon-${size}x${size}.png`);
+    console.log(`OK  icon-${size}x${size}.png`);
   }
 
-  // favicon 32x32
-  await sharp(svgBuffer)
-    .resize(32, 32)
+  // 2. Favicon 32x32 (con padding minimo para favicon de pestaña)
+  await sharp(SOURCE_ISOLOGO)
+    .resize(32, 32, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } })
     .png()
-    .toFile(path.join(__dirname, '..', 'public', 'favicon-32x32.png'));
-  console.log('OK favicon-32x32.png');
+    .toFile(path.join(publicDir, 'favicon-32x32.png'));
+  console.log('OK  favicon-32x32.png');
 
-  // favicon 16x16
-  await sharp(svgBuffer)
-    .resize(16, 16)
+  // 3. Favicon 16x16
+  await sharp(SOURCE_ISOLOGO)
+    .resize(16, 16, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } })
     .png()
-    .toFile(path.join(__dirname, '..', 'public', 'favicon-16x16.png'));
-  console.log('OK favicon-16x16.png');
+    .toFile(path.join(publicDir, 'favicon-16x16.png'));
+  console.log('OK  favicon-16x16.png');
 
-  // apple-touch-icon 180x180 (iOS)
-  await sharp(svgBuffer)
-    .resize(180, 180)
+  // 4. apple-touch-icon 180x180 (iOS Add to Home Screen)
+  // iOS requiere fondo solido (no transparencia)
+  await sharp(SOURCE_ISOLOGO)
+    .resize(140, 140, { fit: 'contain', background: { r: 245, g: 240, b: 232, alpha: 1 } })
+    .extend({
+      top: 20,
+      bottom: 20,
+      left: 20,
+      right: 20,
+      background: { r: 245, g: 240, b: 232, alpha: 1 }, // crema Komuny (#F5F0E8)
+    })
+    .flatten({ background: { r: 245, g: 240, b: 232 } })
     .png()
-    .toFile(path.join(__dirname, '..', 'public', 'apple-touch-icon.png'));
-  console.log('OK apple-touch-icon.png');
+    .toFile(path.join(publicDir, 'apple-touch-icon.png'));
+  console.log('OK  apple-touch-icon.png (fondo crema #F5F0E8)');
 
-  // Maskable para Android (area segura al 100%)
-  await sharp(svgMaskableBuffer)
-    .resize(512, 512)
+  // 5. Maskable icons (Android adaptive - safe zone al 80%)
+  // El area maskable se recorta en circulo/rounded por Android, asi que
+  // el isologo va al 70% para mantener safe zone
+  const maskableSize = 512;
+  const maskableInner = Math.round(maskableSize * 0.65);
+  const maskablePadding = Math.round((maskableSize - maskableInner) / 2);
+
+  await sharp(SOURCE_ISOLOGO)
+    .resize(maskableInner, maskableInner, {
+      fit: 'contain',
+      background: { r: 245, g: 240, b: 232, alpha: 1 },
+    })
+    .extend({
+      top: maskablePadding,
+      bottom: maskablePadding,
+      left: maskablePadding,
+      right: maskablePadding,
+      background: { r: 245, g: 240, b: 232, alpha: 1 },
+    })
+    .flatten({ background: { r: 245, g: 240, b: 232 } })
     .png()
     .toFile(path.join(iconsDir, 'icon-maskable-512x512.png'));
-  console.log('OK icon-maskable-512x512.png');
+  console.log('OK  icon-maskable-512x512.png');
 
-  await sharp(svgMaskableBuffer)
+  await sharp(path.join(iconsDir, 'icon-maskable-512x512.png'))
     .resize(192, 192)
     .png()
     .toFile(path.join(iconsDir, 'icon-maskable-192x192.png'));
-  console.log('OK icon-maskable-192x192.png');
+  console.log('OK  icon-maskable-192x192.png');
 
-  console.log('\nDONE — todos los iconos PWA generados correctamente');
+  // 6. Limpiar favicon.jpg viejo (era el isologo equivocado)
+  const oldFaviconJpg = path.join(publicDir, 'favicon.jpg');
+  if (fs.existsSync(oldFaviconJpg)) {
+    fs.unlinkSync(oldFaviconJpg);
+    console.log('DELETED  favicon.jpg (viejo)');
+  }
+
+  console.log('\nDONE - todos los iconos generados con isologo Komuny correcto');
 }
 
 main().catch((err) => {
