@@ -28,6 +28,7 @@ import KomIA from '../components/KomIA';
 import { ScrollProgressBar, BackToTop } from '../components/ScrollProgress';
 import SiteFooter from '../components/SiteFooter';
 import AnthropicBadge, { AnthropicMark, AnthropicWordmark, ANTHROPIC_ORANGE } from '../components/AnthropicBadge';
+import NapsixBadge from '../components/NapsixBadge';
 import AuroraBackground from '../components/AuroraBackground';
 import BrowserFrame from '../components/BrowserFrame';
 import PresetCard, { KOMUNY_PRESETS } from '../components/PresetCard';
@@ -311,23 +312,13 @@ export default function ParaFundacionesPage() {
                 style={{
                   display: 'flex',
                   alignItems: 'center',
-                  gap: '1.5rem',
+                  gap: '1rem',
                   marginTop: '2rem',
                   flexWrap: 'wrap',
                 }}
               >
                 <AnthropicBadge variant="card" />
-                <div style={{ fontSize: '0.84rem', color: 'var(--ink-muted)' }}>
-                  Desarrollado por{' '}
-                  <a
-                    href="https://napsix.ai"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{ color: 'var(--accent)', textDecoration: 'none', fontWeight: 600 }}
-                  >
-                    Napsix.AI
-                  </a>
-                </div>
+                <NapsixBadge variant="card" label="Desarrollado por" height={22} />
               </motion.div>
             </div>
 

@@ -7,6 +7,7 @@ import { useChat } from '@ai-sdk/react';
 import { DefaultChatTransport, isTextUIPart } from 'ai';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import NapsixBadge from './NapsixBadge';
 
 const SUGGESTIONS = [
   '¿Qué es un LLM?',
@@ -479,30 +480,18 @@ export default function KomIA() {
                 </form>
               </div>
 
-              {/* Powered by Napsix.AI */}
+              {/* Powered by Napsix.AI (logo oficial) */}
               <div style={{
                 borderTop: '1px solid var(--border)',
-                padding: '0.4rem 1rem',
+                padding: '0.5rem 1rem',
                 textAlign: 'center',
                 flexShrink: 0,
                 background: 'var(--bg-warm)',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
               }}>
-                <a
-                  href="https://napsix.ai"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{
-                    fontSize: '0.7rem',
-                    color: 'var(--ink-muted)',
-                    textDecoration: 'none',
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '0.3rem',
-                    opacity: 0.75,
-                  }}
-                >
-                  ⚡ Powered by <strong style={{ color: 'var(--ink)' }}>Napsix.AI</strong>
-                </a>
+                <NapsixBadge variant="powered" height={13} />
               </div>
             </motion.div>
           </>

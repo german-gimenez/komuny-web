@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { FileCheck2, CalendarDays, FileSearch, ScanSearch, HelpCircle, Sparkles, ArrowRight } from 'lucide-react';
 import ToolLayout from '../components/ToolLayout';
+import NapsixBadge from '../components/NapsixBadge';
 
 const tools = [
   {
@@ -130,12 +131,9 @@ export default function HerramientasHub() {
             Gratis, en espanol, sin necesidad de cuenta.
           </motion.p>
 
-          <motion.p {...fadeUp(0.2)} style={{ fontSize: '0.85rem', color: 'var(--ink-muted)' }}>
-            Powered by{' '}
-            <a href="https://napsix.ai" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--accent)', textDecoration: 'none', fontWeight: 600 }}>
-              Napsix.AI
-            </a>
-          </motion.p>
+          <motion.div {...fadeUp(0.2)} style={{ display: 'inline-flex', alignItems: 'center', gap: '0.45rem' }}>
+            <NapsixBadge variant="inline" label="Powered by" height={15} />
+          </motion.div>
         </div>
       </section>
 

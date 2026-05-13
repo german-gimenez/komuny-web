@@ -15,6 +15,7 @@
 
 import Link from 'next/link';
 import { AnthropicBadgeInline } from './AnthropicBadge';
+import NapsixBadge from './NapsixBadge';
 
 const socials = [
   { href: 'https://www.instagram.com/komuny.social/', label: 'Instagram' },
@@ -144,7 +145,7 @@ export default function SiteFooter() {
         ))}
       </div>
 
-      {/* Built with Anthropic + Napsix */}
+      {/* Built with Anthropic + Desarrollado por Napsix (logo) */}
       <div
         style={{
           display: 'flex',
@@ -160,17 +161,7 @@ export default function SiteFooter() {
           aria-hidden="true"
           style={{ width: '4px', height: '4px', borderRadius: '50%', background: 'var(--border)' }}
         />
-        <span style={{ fontSize: '0.78rem', color: 'var(--ink-muted)' }}>
-          Desarrollado por{' '}
-          <a
-            href="https://napsix.ai"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{ color: 'var(--accent)', textDecoration: 'none', fontWeight: 600 }}
-          >
-            Napsix.AI
-          </a>
-        </span>
+        <NapsixBadge variant="inline" label="Desarrollado por" height={15} />
       </div>
 
       {/* Credito */}

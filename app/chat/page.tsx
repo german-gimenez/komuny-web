@@ -28,6 +28,7 @@ import SiteFooter from '../components/SiteFooter';
 import ChatHero from '../components/ChatHero';
 import PresetCard, { KOMUNY_PRESETS } from '../components/PresetCard';
 import AnthropicBadge, { AnthropicMark, AnthropicWordmark, ANTHROPIC_ORANGE } from '../components/AnthropicBadge';
+import NapsixBadge from '../components/NapsixBadge';
 
 const CHAT_URL = 'https://chat.komuny.org';
 
@@ -834,8 +835,18 @@ export default function ChatPage() {
         />
 
         <div style={{ maxWidth: '700px', margin: '0 auto', position: 'relative', zIndex: 1 }}>
-          <motion.div {...fadeUp(0)} style={{ marginBottom: '1.5rem', display: 'inline-block' }}>
+          <motion.div
+            {...fadeUp(0)}
+            style={{
+              marginBottom: '1.5rem',
+              display: 'inline-flex',
+              gap: '0.85rem',
+              flexWrap: 'wrap',
+              justifyContent: 'center',
+            }}
+          >
             <AnthropicBadge variant="card" dark />
+            <NapsixBadge variant="pill-dark" label="Desarrollado por" height={22} />
           </motion.div>
 
           <motion.h2

@@ -37,6 +37,7 @@ import BrowserFrame from './BrowserFrame';
 import FloatingChips, { type Chip } from './FloatingChips';
 import CapabilitiesMarquee from './CapabilitiesMarquee';
 import { AnthropicBadgeInline, AnthropicMark, AnthropicWordmark, ANTHROPIC_ORANGE } from './AnthropicBadge';
+import NapsixBadge from './NapsixBadge';
 import { KOMUNY_PRESETS } from './PresetCard';
 
 const fadeUp = (delay = 0) => ({
@@ -532,39 +533,27 @@ export default function ChatHero({
               )}
             </motion.div>
 
-            {/* Subtitulo "desarrollado por" */}
-            <motion.p
+            {/* Subtitulo "desarrollado por" con logo oficial Napsix */}
+            <motion.div
               {...initWrap(0.6)}
               style={{
-                fontSize: '0.82rem',
-                color: 'var(--ink-muted)',
                 marginTop: '1.5rem',
-                display: 'inline-flex',
+                display: 'flex',
                 alignItems: 'center',
-                gap: '0.35rem',
+                gap: '0.85rem',
                 flexWrap: 'wrap',
               }}
             >
-              Desarrollado por{' '}
-              <a
-                href="https://napsix.ai"
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                  color: 'var(--accent)',
-                  textDecoration: 'none',
-                  fontWeight: 600,
-                }}
-              >
-                Napsix.AI
-              </a>
-              {' · '}
-              Modelos de{' '}
-              <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.25rem' }}>
-                <AnthropicMark size={12} color={ANTHROPIC_ORANGE} />
-                <AnthropicWordmark height={12} color="var(--ink)" />
+              <NapsixBadge variant="inline" label="Desarrollado por" height={16} />
+              <span aria-hidden="true" style={{ width: '3px', height: '3px', borderRadius: '50%', background: 'var(--border)' }} />
+              <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem', fontSize: '0.82rem', color: 'var(--ink-muted)' }}>
+                Modelos de
+                <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.25rem' }}>
+                  <AnthropicMark size={12} color={ANTHROPIC_ORANGE} />
+                  <AnthropicWordmark height={12} color="var(--ink)" />
+                </span>
               </span>
-            </motion.p>
+            </motion.div>
           </div>
 
           {/* DERECHA: mockup animado del Chat */}
