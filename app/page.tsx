@@ -3,13 +3,15 @@ import { useState } from 'react';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
-import { BookOpen, Cpu, FileText, GraduationCap, Star, ArrowRight, GitFork, Search, X, Lightbulb, AlertCircle, ChevronDown, Globe, Scale, Shield, Handshake, Wrench, Newspaper, ExternalLink } from 'lucide-react';
+import { BookOpen, Cpu, FileText, GraduationCap, Star, ArrowRight, GitFork, Search, X, Lightbulb, AlertCircle, ChevronDown, Globe, Scale, Shield, Handshake, Wrench, Newspaper, ExternalLink, MessageSquare, Building2 } from 'lucide-react';
 import { glossaryTerms, letters, tagColors, GlossaryTerm } from './data/glossary';
 import KomIA from './components/KomIA';
 import NavBar from './components/NavBar';
 import { ScrollProgressBar, BackToTop } from './components/ScrollProgress';
 import TextFlip from './components/TextFlip';
 import SiteFooter from './components/SiteFooter';
+import ChatHero from './components/ChatHero';
+import { AnthropicMark, ANTHROPIC_ORANGE } from './components/AnthropicBadge';
 
 const Globe3D = dynamic(() => import('./components/Globe3D'), {
   ssr: false,
@@ -80,8 +82,10 @@ export default function Home() {
   }, {} as Record<string, GlossaryTerm[]>);
 
   const features = [
-    { icon: <BookOpen size={18} />, title: 'Glosario', desc: 'Terminos de IA explicados para educadores.', color: '#D4622A', bg: '#FBE9DF', href: '#glosario', label: 'Ver →', external: false },
+    { icon: <MessageSquare size={18} />, title: 'Komuny Chat', desc: '6 asistentes pedagogicos pre-cargados, agentes, MCPs, memoria. Built with Anthropic.', color: '#D4622A', bg: '#FBE9DF', href: '/chat', label: 'Nuevo →', external: false },
+    { icon: <Building2 size={18} />, title: 'Para Fundaciones', desc: 'Lleva Komuny Chat a tu organizacion con marca propia y presets a medida.', color: '#1A5C9A', bg: '#E0EDF7', href: '/para-fundaciones', label: 'Conocer →', external: false },
     { icon: <Wrench size={18} />, title: 'Herramientas IA', desc: 'Generador de rubricas, planificador, simplificador de textos y mas.', color: '#8B2FC9', bg: '#F2E8FB', href: '/herramientas', label: 'Usar ahora →', external: false },
+    { icon: <BookOpen size={18} />, title: 'Glosario', desc: 'Terminos de IA explicados para educadores.', color: '#D4622A', bg: '#FBE9DF', href: '#glosario', label: 'Ver →', external: false },
     { icon: <Globe size={18} />, title: 'Herramientas gratuitas', desc: 'Canva, Khanmigo, NotebookLM y mas recursos sin costo.', color: '#C9A227', bg: '#FBF3DC', href: 'https://github.com/german-gimenez/komuny/blob/main/recursos/herramientas-gratuitas.md', label: 'Ver lista →', external: true },
     { icon: <Cpu size={18} />, title: 'Skills para Claude', desc: 'Configuraciones especializadas listas para usar en el aula.', color: '#3A6B4A', bg: '#E8F2EC', href: 'https://github.com/german-gimenez/komuny/tree/main/skills', label: 'En GitHub →', external: true },
     { icon: <FileText size={18} />, title: 'Templates de Prompts', desc: 'Tickets listos para planear clases y evaluar.', color: '#1A5C9A', bg: '#E0EDF7', href: 'https://github.com/german-gimenez/komuny/tree/main/templates', label: 'En GitHub →', external: true },
@@ -101,27 +105,36 @@ export default function Home() {
           {/* LEFT */}
           <div className="hero-left">
             <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
-              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: 'var(--accent-pale)', border: '1px solid var(--accent-light)', padding: '0.35rem 1rem', borderRadius: '20px', marginBottom: '2rem' }}>
+              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: 'var(--accent-pale)', border: '1px solid var(--accent-light)', padding: '0.35rem 1rem', borderRadius: '20px', marginBottom: '2rem', flexWrap: 'wrap' }}>
                 <Star size={13} color="var(--accent)" fill="var(--accent)" />
-                <span style={{ fontSize: '0.82rem', color: 'var(--accent)', fontWeight: 600, letterSpacing: '0.05em' }}>OPEN SOURCE - PARA LATAM</span>
+                <span style={{ fontSize: '0.78rem', color: 'var(--accent)', fontWeight: 600, letterSpacing: '0.05em' }}>OPEN SOURCE</span>
+                <span aria-hidden="true" style={{ width: '1px', height: '10px', background: 'var(--accent-light)' }} />
+                <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.3rem', fontSize: '0.78rem', color: 'var(--ink)', fontWeight: 600 }}>
+                  <AnthropicMark size={12} color={ANTHROPIC_ORANGE} /> BUILT WITH ANTHROPIC
+                </span>
+                <span aria-hidden="true" style={{ width: '1px', height: '10px', background: 'var(--accent-light)' }} />
+                <span style={{ fontSize: '0.78rem', color: 'var(--accent)', fontWeight: 600, letterSpacing: '0.05em' }}>PARA LATAM</span>
               </div>
             </motion.div>
             <motion.h1 className="hero-h1" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.1 }} style={{ fontWeight: 700, letterSpacing: '-0.02em', marginBottom: '1.5rem', lineHeight: 1.12 }}>
               <span style={{ display: 'block' }}>IA para <TextFlip />,</span>
               <em style={{ fontStyle: 'italic', fontWeight: 300, color: 'var(--accent)' }}>sin barreras.</em>
             </motion.h1>
-            <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.2 }} style={{ fontSize: '1.1rem', color: 'var(--ink-muted)', maxWidth: '480px', marginBottom: '2.5rem', lineHeight: 1.7 }}>
-              Recursos practicos, abiertos y colaborativos para educadores que quieren integrar inteligencia artificial en el aula.
+            <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.2 }} style={{ fontSize: '1.1rem', color: 'var(--ink-muted)', maxWidth: '500px', marginBottom: '2.5rem', lineHeight: 1.7 }}>
+              Recursos practicos, abiertos y colaborativos para <strong style={{ color: 'var(--ink)', fontWeight: 600 }}>educadores y fundaciones</strong> que quieren integrar inteligencia artificial en el aula y en sus programas.
             </motion.p>
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.3 }} style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }} className="hero-ctas">
-              <a href="#glosario" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: 'var(--ink)', color: 'var(--bg)', padding: '0.75rem 1.75rem', borderRadius: '30px', textDecoration: 'none', fontWeight: 500 }}>
-                Explorar glosario <ArrowRight size={16} />
-              </a>
-              <a href="#recursos" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: 'transparent', color: 'var(--ink)', padding: '0.75rem 1.75rem', borderRadius: '30px', textDecoration: 'none', fontWeight: 500, border: '1.5px solid var(--border)' }}>
-                <Globe size={16} /> Recursos
-              </a>
-              <a href="https://github.com/german-gimenez/komuny" target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: 'transparent', color: 'var(--ink)', padding: '0.75rem 1.75rem', borderRadius: '30px', textDecoration: 'none', fontWeight: 500, border: '1.5px solid var(--border)' }}>
-                <GitFork size={16} /> Ver en GitHub
+              <Link href="/chat" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: 'var(--ink)', color: 'var(--bg)', padding: '0.75rem 1.75rem', borderRadius: '30px', textDecoration: 'none', fontWeight: 600 }}>
+                <MessageSquare size={16} /> Komuny Chat
+                <span style={{ fontSize: '0.6rem', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase' as const, padding: '1px 6px', borderRadius: '20px', background: 'var(--accent)', color: 'white', lineHeight: 1.3 }}>
+                  Nuevo
+                </span>
+              </Link>
+              <Link href="/para-fundaciones" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: 'transparent', color: 'var(--ink)', padding: '0.75rem 1.75rem', borderRadius: '30px', textDecoration: 'none', fontWeight: 500, border: '1.5px solid var(--border)' }}>
+                <Building2 size={16} /> Para fundaciones
+              </Link>
+              <a href="#glosario" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: 'transparent', color: 'var(--ink)', padding: '0.75rem 1.75rem', borderRadius: '30px', textDecoration: 'none', fontWeight: 500, border: '1.5px solid var(--border)' }}>
+                Glosario <ArrowRight size={16} />
               </a>
             </motion.div>
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6 }} style={{ display: 'flex', gap: '2rem', marginTop: '3.5rem', flexWrap: 'wrap' }} className="hero-stats">
@@ -145,6 +158,9 @@ export default function Home() {
           </motion.div>
         </div>
       </section>
+
+      {/* CHAT HERO — nuevo bloque animado destacando Komuny Chat */}
+      <ChatHero variant="home" />
 
       {/* FEATURES */}
       <section id="recursos" className="recursos-section" style={{ padding: '3rem 2rem', background: 'var(--bg-warm)' }}>
