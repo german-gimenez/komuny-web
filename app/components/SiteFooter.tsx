@@ -42,29 +42,30 @@ export default function SiteFooter() {
         marginTop: 'auto',
       }}
     >
-      {/* Logo + tagline */}
+      {/* Logo wordmark color + tagline */}
       <div
         style={{
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          gap: '0.5rem',
+          gap: '0.65rem',
           marginBottom: '1.5rem',
         }}
       >
-        <Link href="/" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.55rem', textDecoration: 'none' }}>
+        <Link href="/" style={{ display: 'inline-block', textDecoration: 'none' }} aria-label="Komuny — Inicio">
           <img
-            src="/icons/icon-192x192.png"
+            src="/komuny-logo-color.png"
             alt="Komuny"
-            width={32}
-            height={32}
-            style={{ width: '32px', height: '32px', objectFit: 'contain' }}
+            style={{
+              height: '52px',
+              width: 'auto',
+              maxWidth: '260px',
+              objectFit: 'contain',
+              display: 'block',
+            }}
           />
-          <span style={{ fontFamily: 'Fraunces, serif', fontWeight: 700, fontSize: '1.15rem', color: 'var(--ink)' }}>
-            Komuny Edu
-          </span>
         </Link>
-        <span style={{ fontSize: '0.85rem', color: 'var(--ink-muted)' }}>
+        <span style={{ fontSize: '0.88rem', color: 'var(--ink-muted)', fontWeight: 500 }}>
           IA para educadores y fundaciones de LATAM
         </span>
       </div>

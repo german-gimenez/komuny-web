@@ -3,90 +3,131 @@
 /**
  * AnthropicBadge — branding partner reutilizable
  *
- * Variantes:
- *  - "inline"     → texto inline pequeño "Built with Anthropic" (footer, etc.)
- *  - "card"       → bloque con logo + descripcion (paginas /chat y /para-fundaciones)
- *  - "wordmark"   → solo el wordmark "Anthropic" (uso compacto)
+ * Usa los **logos oficiales** descargados desde anthropic.com/press-kit,
+ * disponibles en /public:
+ *  - anthropic-logo-slate.svg / .png  (wordmark dark para fondo claro)
+ *  - anthropic-logo-ivory.svg / .png  (wordmark light para fondo oscuro)
+ *  - anthropic-symbol-slate.svg / .png (simbolo "A" dark)
+ *  - anthropic-symbol-ivory.svg / .png (simbolo "A" light)
  *
- * El logo se reconstruye en SVG inline para no depender de un asset.
- * Cuando se descargue el logo oficial desde anthropic.com/press-kit
- * se puede swappear por un <Image src="/anthropic-logo.svg" />.
+ * Variantes:
+ *  - "inline"    → texto inline pequeno "Built with Anthropic" (footer, etc.)
+ *  - "card"      → bloque con simbolo + wordmark (paginas /chat y /para-fundaciones)
+ *  - "wordmark"  → solo el wordmark "Anthropic" (uso compacto)
+ *  - "symbol"    → solo el simbolo
+ *
+ * theme: 'slate' (default, para fondos claros) | 'ivory' (para fondos oscuros)
  */
 
 import { motion } from 'framer-motion';
 
-const ANTHROPIC_ORANGE = '#CC785C'; // accent oficial de Anthropic
+const ANTHROPIC_ORANGE = '#CC785C'; // accent oficial Anthropic — usado en acentos/borders (no en el logo)
 
-function AnthropicMark({ size = 18, color = ANTHROPIC_ORANGE }: { size?: number; color?: string }) {
-  // "A" estilizada de Anthropic (4 barras verticales asimetricas formando A)
+// Dimensiones reales de los SVGs oficiales
+const SYMBOL_RATIO = 92 / 64;  // width / height del symbol
+const LOGO_RATIO = 590 / 68;   // width / height del wordmark
+
+type Theme = 'slate' | 'ivory';
+
+export function AnthropicSymbol({
+  size = 20,
+  theme = 'slate',
+  alt = 'Anthropic',
+}: {
+  size?: number;
+  theme?: Theme;
+  alt?: string;
+}) {
   return (
-    <svg
-      width={size}
+    <img
+      src={`/anthropic-symbol-${theme}.svg`}
+      alt={alt}
+      width={Math.round(size * SYMBOL_RATIO)}
       height={size}
-      viewBox="0 0 64 64"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      aria-hidden="true"
-    >
-      <path
-        d="M22.2 12L8 52h9.2l2.9-8.5h17.8l2.9 8.5H50L35.8 12H22.2zm.6 24.5l5.6-16.4 5.6 16.4H22.8z"
-        fill={color}
-      />
-    </svg>
-  );
-}
-
-function AnthropicWordmark({ height = 16, color = 'currentColor' }: { height?: number; color?: string }) {
-  // Wordmark simplificado "Anthropic" con fontstyle similar al oficial
-  return (
-    <span
       style={{
-        fontFamily: '"Inter", "Helvetica Neue", system-ui, sans-serif',
-        fontWeight: 500,
-        fontSize: `${height}px`,
-        letterSpacing: '-0.01em',
-        color,
-        lineHeight: 1,
+        height: `${size}px`,
+        width: 'auto',
         display: 'inline-block',
+        verticalAlign: 'middle',
       }}
-    >
-      Anthropic
-    </span>
+      loading="lazy"
+      draggable={false}
+    />
   );
 }
 
-export function AnthropicBadgeInline({ color = 'var(--ink-muted)' }: { color?: string }) {
+export function AnthropicLogo({
+  height = 18,
+  theme = 'slate',
+  alt = 'Anthropic',
+}: {
+  height?: number;
+  theme?: Theme;
+  alt?: string;
+}) {
   return (
-    <span
+    <img
+      src={`/anthropic-logo-${theme}.svg`}
+      alt={alt}
+      width={Math.round(height * LOGO_RATIO)}
+      height={height}
       style={{
-        display: 'inline-flex',
-        alignItems: 'center',
-        gap: '0.4rem',
-        fontSize: '0.78rem',
-        color,
-        whiteSpace: 'nowrap',
+        height: `${height}px`,
+        width: 'auto',
+        display: 'inline-block',
+        verticalAlign: 'middle',
       }}
-    >
-      <AnthropicMark size={13} color={ANTHROPIC_ORANGE} />
-      <span>
-        Built with <AnthropicWordmark height={13} color={color} />
-      </span>
-    </span>
+      loading="lazy"
+      draggable={false}
+    />
   );
 }
 
-export function AnthropicBadgeWordmark({ color = 'var(--ink)' }: { color?: string }) {
+export function AnthropicBadgeInline({
+  color = 'var(--ink-muted)',
+  dark = false,
+}: {
+  color?: string;
+  dark?: boolean;
+}) {
+  const theme: Theme = dark ? 'ivory' : 'slate';
   return (
     <span
       style={{
         display: 'inline-flex',
         alignItems: 'center',
         gap: '0.45rem',
+        fontSize: '0.78rem',
         color,
+        whiteSpace: 'nowrap',
+        fontWeight: 500,
       }}
     >
-      <AnthropicMark size={18} color={ANTHROPIC_ORANGE} />
-      <AnthropicWordmark height={16} color={color} />
+      <AnthropicSymbol size={14} theme={theme} />
+      <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.32rem' }}>
+        Built with
+        <AnthropicLogo height={11} theme={theme} />
+      </span>
+    </span>
+  );
+}
+
+export function AnthropicBadgeWordmark({
+  dark = false,
+}: {
+  dark?: boolean;
+}) {
+  const theme: Theme = dark ? 'ivory' : 'slate';
+  return (
+    <span
+      style={{
+        display: 'inline-flex',
+        alignItems: 'center',
+        gap: '0.55rem',
+      }}
+    >
+      <AnthropicSymbol size={18} theme={theme} />
+      <AnthropicLogo height={14} theme={theme} />
     </span>
   );
 }
@@ -95,13 +136,22 @@ export default function AnthropicBadge({
   variant = 'card',
   dark = false,
 }: {
-  variant?: 'inline' | 'card' | 'wordmark';
+  variant?: 'inline' | 'card' | 'wordmark' | 'symbol';
   dark?: boolean;
 }) {
-  if (variant === 'inline') return <AnthropicBadgeInline color={dark ? 'rgba(245,240,232,0.7)' : 'var(--ink-muted)'} />;
-  if (variant === 'wordmark') return <AnthropicBadgeWordmark color={dark ? 'var(--bg)' : 'var(--ink)'} />;
+  const theme: Theme = dark ? 'ivory' : 'slate';
 
-  // card: bloque con logo grande + texto explicativo
+  if (variant === 'inline') {
+    return <AnthropicBadgeInline color={dark ? 'rgba(245,240,232,0.75)' : 'var(--ink-muted)'} dark={dark} />;
+  }
+  if (variant === 'wordmark') {
+    return <AnthropicBadgeWordmark dark={dark} />;
+  }
+  if (variant === 'symbol') {
+    return <AnthropicSymbol size={28} theme={theme} />;
+  }
+
+  // card: bloque con logo + texto explicativo
   return (
     <motion.div
       initial={{ opacity: 0, y: 12 }}
@@ -120,10 +170,10 @@ export default function AnthropicBadge({
     >
       <div
         style={{
-          width: '38px',
-          height: '38px',
+          width: '40px',
+          height: '40px',
           borderRadius: '10px',
-          background: ANTHROPIC_ORANGE + '18',
+          background: ANTHROPIC_ORANGE + '15',
           border: `1px solid ${ANTHROPIC_ORANGE}40`,
           display: 'flex',
           alignItems: 'center',
@@ -131,24 +181,64 @@ export default function AnthropicBadge({
           flexShrink: 0,
         }}
       >
-        <AnthropicMark size={22} color={ANTHROPIC_ORANGE} />
+        <AnthropicSymbol size={22} theme={theme} />
       </div>
-      <div style={{ display: 'flex', flexDirection: 'column' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.15rem' }}>
         <span
           style={{
-            fontSize: '0.68rem',
-            fontWeight: 600,
-            letterSpacing: '0.1em',
+            fontSize: '0.66rem',
+            fontWeight: 700,
+            letterSpacing: '0.12em',
             textTransform: 'uppercase' as const,
             color: dark ? 'rgba(245,240,232,0.55)' : 'var(--ink-muted)',
           }}
         >
           Built with
         </span>
-        <AnthropicWordmark height={18} color={dark ? 'var(--bg)' : 'var(--ink)'} />
+        <AnthropicLogo height={16} theme={theme} />
       </div>
     </motion.div>
   );
 }
 
-export { AnthropicMark, AnthropicWordmark, ANTHROPIC_ORANGE };
+// Compat: ChatHero y otros usan AnthropicMark / AnthropicWordmark con props (size, color).
+// Mantenemos esos aliases para retro-compat — el color se ignora porque el logo oficial
+// tiene su propio color. Si se pide tema dark, devolvemos la version ivory.
+export function AnthropicMark({
+  size = 18,
+  color,
+}: {
+  size?: number;
+  color?: string;
+}) {
+  // Si color es claro/blanco/transparente, usamos ivory. Default slate.
+  const isLight =
+    color &&
+    (color === '#fff' ||
+      color === '#ffffff' ||
+      color === 'white' ||
+      color.toLowerCase().includes('245,240,232') ||
+      color === 'var(--bg)');
+  const theme: Theme = isLight ? 'ivory' : 'slate';
+  return <AnthropicSymbol size={size} theme={theme} />;
+}
+
+export function AnthropicWordmark({
+  height = 16,
+  color,
+}: {
+  height?: number;
+  color?: string;
+}) {
+  const isLight =
+    color &&
+    (color === '#fff' ||
+      color === '#ffffff' ||
+      color === 'white' ||
+      color.toLowerCase().includes('245,240,232') ||
+      color === 'var(--bg)');
+  const theme: Theme = isLight ? 'ivory' : 'slate';
+  return <AnthropicLogo height={height} theme={theme} />;
+}
+
+export { ANTHROPIC_ORANGE };

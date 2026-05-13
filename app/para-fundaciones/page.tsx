@@ -198,7 +198,21 @@ export default function ParaFundacionesPage() {
             }}
           >
             <div>
-              <motion.div {...fadeUpInstant(0)}>
+              {/* Logo Komuny wordmark color */}
+              <motion.div {...fadeUpInstant(0)} style={{ marginBottom: '1.25rem' }}>
+                <img
+                  src="/komuny-logo-color.png"
+                  alt="Komuny"
+                  style={{
+                    height: '44px',
+                    width: 'auto',
+                    maxWidth: '220px',
+                    objectFit: 'contain',
+                    display: 'block',
+                  }}
+                />
+              </motion.div>
+              <motion.div {...fadeUpInstant(0.05)}>
                 <div
                   style={{
                     display: 'inline-flex',

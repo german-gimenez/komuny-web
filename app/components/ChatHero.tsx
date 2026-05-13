@@ -358,6 +358,25 @@ export default function ChatHero({
         >
           {/* IZQUIERDA: texto + CTAs + presets */}
           <div className="chat-hero-text">
+            {/* Logo Komuny wordmark color — solo variant page */}
+            {isPage && (
+              <motion.div
+                {...initWrap(0)}
+                style={{ marginBottom: '1.25rem' }}
+              >
+                <img
+                  src="/komuny-logo-color.png"
+                  alt="Komuny"
+                  style={{
+                    height: '44px',
+                    width: 'auto',
+                    maxWidth: '220px',
+                    objectFit: 'contain',
+                    display: 'block',
+                  }}
+                />
+              </motion.div>
+            )}
             <motion.div {...initWrap(0)}>
               <div
                 style={{
