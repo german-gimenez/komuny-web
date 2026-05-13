@@ -281,7 +281,10 @@ C:\dev_projects\Komuny\komuny        # contenido publico
 
 ## Credenciales y Servicios
 
-- **Vercel proyecto:** `napsixai/komuny-web`
+- **Vercel proyecto activo:** `napsixai/komuny-edu` — **EL QUE SIRVE komuny.org**
+  - El project.json local apunta a este. Es donde se hace `vercel deploy --prod`.
+  - Existe tambien `napsixai/komuny-web` (URL default `komuny-web.vercel.app`) — NO sirve el dominio custom; se mantiene como backup.
+- **Backup link:** `.vercel/project.json.komuny-web.backup` — si necesitas re-link a komuny-web
 - **GitHub repos:** `german-gimenez/komuny-web` (privado) + `german-gimenez/komuny` (publico)
 - **Dominio:** komuny.org → apunta a Vercel
 - **AWS Bedrock:** us-east-1, IAM user `cursor-windsurf-bedrock` (account 939068522139)
@@ -314,7 +317,10 @@ C:\dev_projects\Komuny\komuny        # contenido publico
   - `resolveModelId()` filtra `modelId` arbitrario del cliente contra whitelist
   - Validacion de herramientas permitidas en `/api/herramientas`
 - [x] Build ✓ + 46 tests ✓ + E2E manual ✓ (chat, herramientas, todas las tools)
-- [x] Vercel env vars: `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_REGION` configuradas
+- [x] Vercel env vars (komuny-edu, Production/Preview/Development): `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_REGION` configuradas
+- [x] **CRITICO descubierto:** komuny.org apunta al proyecto `komuny-edu`, NO a `komuny-web`. Se relink el `.vercel/` local. Backup en `.vercel/project.json.komuny-web.backup`.
+- [x] **Lesson learned:** PowerShell `"valor" | vercel env add` agrega CRLF al final. Usar `cmd /c "type file.txt | vercel env add"` con archivo sin BOM ni newline.
+- [x] Verificacion E2E final en https://komuny.org/api/chat: 4 tools OK + herramientas Sonnet 4.5 OK
 
 ---
 
