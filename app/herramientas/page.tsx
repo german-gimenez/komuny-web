@@ -132,7 +132,7 @@ export default function HerramientasHub() {
           </motion.p>
 
           <motion.div {...fadeUp(0.2)} style={{ display: 'inline-flex', alignItems: 'center', gap: '0.45rem' }}>
-            <NapsixBadge variant="inline" label="Powered by" height={15} />
+            <NapsixBadge variant="inline" label="Powered by" height={23} />
           </motion.div>
         </div>
       </section>

@@ -87,7 +87,7 @@ export default function NapsixBadge({
   );
 
   if (variant === 'wordmark') {
-    return link(<NapsixLogoImg height={height || 22} />);
+    return link(<NapsixLogoImg height={height || 33} />);
   }
 
   if (variant === 'inline') {
@@ -98,7 +98,7 @@ export default function NapsixBadge({
             {label}
           </span>
         )}
-        <NapsixLogoImg height={height || 16} />
+        <NapsixLogoImg height={height || 24} />
       </>
     );
   }
@@ -108,7 +108,7 @@ export default function NapsixBadge({
     return link(
       <>
         <span style={{ fontSize: '0.72rem', color: 'var(--ink-muted)' }}>⚡ Powered by</span>
-        <NapsixLogoImg height={height || 14} />
+        <NapsixLogoImg height={height || 21} />
       </>
     );
   }
@@ -147,7 +147,7 @@ export default function NapsixBadge({
             {label}
           </span>
         )}
-        <NapsixLogoImg height={height || 18} />
+        <NapsixLogoImg height={height || 27} />
       </a>
     );
   }
@@ -184,7 +184,7 @@ export default function NapsixBadge({
         >
           {label}
         </span>
-        <NapsixLogoImg height={height || 22} />
+        <NapsixLogoImg height={height || 33} />
       </div>
     </a>
   );

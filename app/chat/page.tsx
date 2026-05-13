@@ -846,7 +846,7 @@ export default function ChatPage() {
             }}
           >
             <AnthropicBadge variant="card" dark />
-            <NapsixBadge variant="pill-dark" label="Desarrollado por" height={22} />
+            <NapsixBadge variant="pill-dark" label="Desarrollado por" height={33} />
           </motion.div>
 
           <motion.h2

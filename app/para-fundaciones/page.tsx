@@ -318,7 +318,7 @@ export default function ParaFundacionesPage() {
                 }}
               >
                 <AnthropicBadge variant="card" />
-                <NapsixBadge variant="card" label="Desarrollado por" height={22} />
+                <NapsixBadge variant="card" label="Desarrollado por" height={33} />
               </motion.div>
             </div>
 

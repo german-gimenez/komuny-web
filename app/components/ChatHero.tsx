@@ -544,7 +544,7 @@ export default function ChatHero({
                 flexWrap: 'wrap',
               }}
             >
-              <NapsixBadge variant="inline" label="Desarrollado por" height={16} />
+              <NapsixBadge variant="inline" label="Desarrollado por" height={24} />
               <span aria-hidden="true" style={{ width: '3px', height: '3px', borderRadius: '50%', background: 'var(--border)' }} />
               <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem', fontSize: '0.82rem', color: 'var(--ink-muted)' }}>
                 Modelos de

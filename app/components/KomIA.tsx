@@ -76,8 +76,31 @@ export default function KomIA() {
   const { messages, sendMessage, status } = useChat({
     transport: new DefaultChatTransport({ api: '/api/chat' }),
     experimental_throttle: 50,
-    onError: (error) => {
-      setErrorMsg('Ocurrió un error al conectar con KomIA. Intentá de nuevo.');
+    onError: async (error) => {
+      // Intentar parsear el detalle del error de Bedrock para mostrar
+      // un mensaje claro al usuario (sin filtrar info sensible).
+      let userMsg = 'Ocurrió un error al conectar con KomIA. Intentá de nuevo.';
+      try {
+        const raw = (error as Error)?.message ?? '';
+        const match = raw.match(/\{[\s\S]*\}$/);
+        if (match) {
+          const body = JSON.parse(match[0]) as { error?: string; detail?: string };
+          if (body.error === 'bedrock_throttling') {
+            userMsg = 'Hay mucho tráfico ahora mismo. Probá de nuevo en unos segundos.';
+          } else if (body.error === 'bedrock_access_denied') {
+            userMsg = 'No tengo permiso para acceder al modelo. Avisá al admin.';
+          } else if (body.error === 'bedrock_no_credentials') {
+            userMsg = 'Las credenciales del servidor no están configuradas.';
+          } else if (body.error === 'bedrock_validation') {
+            userMsg = 'La petición no fue válida. Intentá reformular tu mensaje.';
+          } else if (body.detail) {
+            userMsg = body.detail;
+          }
+        }
+      } catch {
+        /* fallback al mensaje genérico */
+      }
+      setErrorMsg(userMsg);
       console.error('[KomIA]', error);
     },
   });
@@ -491,7 +514,7 @@ export default function KomIA() {
                 justifyContent: 'center',
                 alignItems: 'center',
               }}>
-                <NapsixBadge variant="powered" height={13} />
+                <NapsixBadge variant="powered" height={20} />
               </div>
             </motion.div>
           </>

@@ -161,7 +161,7 @@ export default function SiteFooter() {
           aria-hidden="true"
           style={{ width: '4px', height: '4px', borderRadius: '50%', background: 'var(--border)' }}
         />
-        <NapsixBadge variant="inline" label="Desarrollado por" height={15} />
+        <NapsixBadge variant="inline" label="Desarrollado por" height={23} />
       </div>
 
       {/* Credito */}
