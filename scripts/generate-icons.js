@@ -2,7 +2,7 @@
 // Komuny Edu - Generador de iconos PWA / favicon / apple-touch
 // =====================================================================
 // Genera todos los iconos desde el isologo real de Komuny
-// Source: public/komuny-ods-wheel-transparent.png (las personitas multicolor)
+// Source: public/komuny-isologo-transparent.png
 //
 // Ejecutar: node scripts/generate-icons.js
 // =====================================================================
@@ -10,7 +10,7 @@ const sharp = require('sharp');
 const fs = require('fs');
 const path = require('path');
 
-const SOURCE_ISOLOGO = path.join(__dirname, '..', 'public', 'komuny-ods-wheel-transparent.png');
+const SOURCE_ISOLOGO = path.join(__dirname, '..', 'public', 'komuny-isologo-transparent.png');
 const publicDir = path.join(__dirname, '..', 'public');
 const iconsDir = path.join(publicDir, 'icons');
 
@@ -112,12 +112,20 @@ async function main() {
     .toFile(path.join(iconsDir, 'icon-maskable-192x192.png'));
   console.log('OK  icon-maskable-192x192.png');
 
-  // 6. Limpiar favicon.jpg viejo (era el isologo equivocado)
-  const oldFaviconJpg = path.join(publicDir, 'favicon.jpg');
-  if (fs.existsSync(oldFaviconJpg)) {
-    fs.unlinkSync(oldFaviconJpg);
-    console.log('DELETED  favicon.jpg (viejo)');
-  }
+  // 6. favicon.jpg para usos locales / previews de archivos en Windows
+  await sharp(SOURCE_ISOLOGO)
+    .resize(420, 420, { fit: 'contain', background: { r: 255, g: 255, b: 255, alpha: 1 } })
+    .extend({
+      top: 46,
+      bottom: 46,
+      left: 46,
+      right: 46,
+      background: { r: 255, g: 255, b: 255, alpha: 1 },
+    })
+    .flatten({ background: { r: 255, g: 255, b: 255 } })
+    .jpeg({ quality: 96, mozjpeg: true })
+    .toFile(path.join(publicDir, 'favicon.jpg'));
+  console.log('OK  favicon.jpg');
 
   console.log('\nDONE - todos los iconos generados con isologo Komuny correcto');
 }
