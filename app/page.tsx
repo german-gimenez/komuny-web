@@ -220,7 +220,7 @@ export default function Home() {
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.1 }}
           >
-            <Link href="/novedades/reinvencion-educativa" style={{ textDecoration: 'none', display: 'block' }}>
+            <Link href="/novedades/zero-a-claude-code" style={{ textDecoration: 'none', display: 'block' }}>
               <div className="novedad-card" style={{
                 background: 'var(--bg-warm)',
                 border: '1.5px solid var(--border)',
@@ -232,40 +232,40 @@ export default function Home() {
                 gridTemplateColumns: '1fr',
               }}>
                 {/* Top accent bar */}
-                <div style={{ height: '4px', background: 'linear-gradient(90deg, var(--accent) 0%, var(--accent-light) 100%)' }} />
+                <div style={{ height: '4px', background: 'linear-gradient(90deg, #1A5C9A 0%, #4A9CD6 100%)' }} />
                 <div style={{ padding: '1.75rem 2rem' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', marginBottom: '1rem', flexWrap: 'wrap' }}>
-                    <span style={{ fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase' as const, padding: '3px 10px', borderRadius: '20px', background: 'var(--accent-pale)', color: 'var(--accent)', border: '1px solid var(--accent-light)' }}>
-                      Ecosistema Educativo
+                    <span style={{ fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase' as const, padding: '3px 10px', borderRadius: '20px', background: '#E0EDF7', color: '#1A5C9A', border: '1px solid #1A5C9A40' }}>
+                      Recurso Recomendado
                     </span>
                     <span style={{ fontSize: '0.8rem', color: 'var(--ink-muted)' }}>Mayo 2026</span>
                   </div>
 
                   <h3 style={{ fontFamily: 'Fraunces, serif', fontSize: 'clamp(1.15rem, 2.5vw, 1.55rem)', fontWeight: 700, color: 'var(--ink)', lineHeight: 1.25, marginBottom: '0.85rem' }}>
-                    "El sistema educativo no esta en crisis. Esta cumpliendo para lo que fue disenado. Y ese es el problema."
+                    Zero to Claude Code: de usuario de IA a creador con IA. Gratis y en espanol.
                   </h3>
 
                   <p style={{ fontSize: '0.92rem', color: 'var(--ink-muted)', lineHeight: 1.65, marginBottom: '1.25rem' }}>
-                    Facundo Vazquez plantea el diagnostico que resuena con nuestra mision: el modelo educativo industrial ya se fracturo.
-                    Lo que viene no es una reforma —es una reinvencion. Desde Komuny colaboramos con herramientas concretas para que
-                    esa reinvencion empiece hoy, en el aula.
+                    Descubrimos un curso interactivo, gratuito y en espanol con 147 lecciones que ensenan terminal,
+                    Git y programacion con IA desde cero. El complemento perfecto para docentes que ya usan Komuny
+                    y quieren dar el siguiente paso: construir sus propias herramientas.
                   </p>
 
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '0.75rem' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                      <span style={{ fontSize: '0.82rem', color: 'var(--ink-muted)', fontStyle: 'italic' }}>Contexto: nota de Facundo Vazquez · Respuesta Komuny</span>
+                      <span style={{ fontSize: '0.82rem', color: 'var(--ink-muted)', fontStyle: 'italic' }}>Recurso externo recomendado · zero2claude.dev</span>
                     </div>
                     <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
                       <a
-                        href="https://www.linkedin.com/posts/facundovazquez_el-sistema-educativo-no-est%C3%A1-en-crisis-est%C3%A1-share-7453405164482445312-gjH1/?utm_source=share"
+                        href="https://zero2claude.dev"
                         target="_blank"
                         rel="noopener noreferrer"
                         onClick={e => e.stopPropagation()}
                         style={{ display: 'inline-flex', alignItems: 'center', gap: '0.3rem', fontSize: '0.82rem', color: 'var(--ink-muted)', textDecoration: 'none', padding: '0.35rem 0.85rem', borderRadius: '20px', border: '1.5px solid var(--border)', background: 'var(--bg)', fontWeight: 500 }}
                       >
-                        <ExternalLink size={12} /> LinkedIn original
+                        <ExternalLink size={12} /> zero2claude.dev
                       </a>
-                      <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.3rem', fontSize: '0.88rem', color: 'var(--accent)', fontWeight: 600 }}>
+                      <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.3rem', fontSize: '0.88rem', color: '#1A5C9A', fontWeight: 600 }}>
                         Leer nota <ArrowRight size={14} />
                       </span>
                     </div>

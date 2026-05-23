@@ -44,6 +44,17 @@ vi.mock('framer-motion', () => ({
 describe('Novedades data integrity', () => {
   const novedades = [
     {
+      slug: 'zero-a-claude-code',
+      fecha: 'Mayo 2026',
+      categoria: 'Recurso Recomendado',
+      categoriaColor: '#1A5C9A',
+      categoriaBg: '#E0EDF7',
+      titulo: 'Zero to Claude Code: de usuario de IA a creador con IA. Gratis y en espanol.',
+      resumen:
+        'Descubrimos un curso interactivo, gratuito y en espanol con 147 lecciones que ensenan terminal, Git y programacion con IA desde cero. El complemento perfecto para docentes que ya usan Komuny y quieren dar el siguiente paso.',
+      autor: 'Recurso externo recomendado · zero2claude.dev',
+    },
+    {
       slug: 'reinvencion-educativa',
       fecha: 'Mayo 2026',
       categoria: 'Ecosistema Educativo',
@@ -56,8 +67,8 @@ describe('Novedades data integrity', () => {
     },
   ];
 
-  it('should have at least one novedad', () => {
-    expect(novedades.length).toBeGreaterThan(0);
+  it('should have at least two novedades', () => {
+    expect(novedades.length).toBeGreaterThanOrEqual(2);
   });
 
   it('every novedad has required fields', () => {
@@ -71,9 +82,14 @@ describe('Novedades data integrity', () => {
     });
   });
 
-  it('slug matches expected article route', () => {
+  it('first slug is the newest novedad', () => {
     const firstSlug = novedades[0].slug;
-    expect(firstSlug).toBe('reinvencion-educativa');
+    expect(firstSlug).toBe('zero-a-claude-code');
+  });
+
+  it('reinvencion-educativa slug exists', () => {
+    const found = novedades.find((n) => n.slug === 'reinvencion-educativa');
+    expect(found).toBeTruthy();
   });
 
   it('categoria color is valid hex', () => {
@@ -128,6 +144,17 @@ describe('Metadata layouts', () => {
     expect((mod.metadata.openGraph as { type: string }).type).toBe('article');
   });
 
+  it('/novedades/zero-a-claude-code layout exports correct title', async () => {
+    const mod = await import('../app/novedades/zero-a-claude-code/layout');
+    expect(mod.metadata.title).toContain('Zero to Claude Code');
+    expect(mod.metadata.title).toContain('Komuny');
+  });
+
+  it('/novedades/zero-a-claude-code layout has openGraph article type', async () => {
+    const mod = await import('../app/novedades/zero-a-claude-code/layout');
+    expect((mod.metadata.openGraph as { type: string }).type).toBe('article');
+  });
+
   it('/novedades layout has openGraph website type', async () => {
     const mod = await import('../app/novedades/layout');
     expect((mod.metadata.openGraph as { type: string }).type).toBe('website');
@@ -147,8 +174,10 @@ describe('Route structure', () => {
     expect(backHref).toBe('/novedades');
   });
 
-  it('article slug is kebab-case', () => {
-    const slug = 'reinvencion-educativa';
-    expect(slug).toMatch(/^[a-z0-9]+(-[a-z0-9]+)*$/);
+  it('article slugs are kebab-case', () => {
+    const slugs = ['reinvencion-educativa', 'zero-a-claude-code'];
+    slugs.forEach((slug) => {
+      expect(slug).toMatch(/^[a-z0-9]+(-[a-z0-9]+)*$/);
+    });
   });
 });

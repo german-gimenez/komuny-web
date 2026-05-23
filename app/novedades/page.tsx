@@ -9,6 +9,17 @@ import SiteFooter from '../components/SiteFooter';
 
 const novedades = [
   {
+    slug: 'zero-a-claude-code',
+    fecha: 'Mayo 2026',
+    categoria: 'Recurso Recomendado',
+    categoriaColor: '#1A5C9A',
+    categoriaBg: '#E0EDF7',
+    titulo: 'Zero to Claude Code: de usuario de IA a creador con IA. Gratis y en espanol.',
+    resumen:
+      'Descubrimos un curso interactivo, gratuito y en espanol con 147 lecciones que ensenan terminal, Git y programacion con IA desde cero. El complemento perfecto para docentes que ya usan Komuny y quieren dar el siguiente paso.',
+    autor: 'Recurso externo recomendado · zero2claude.dev',
+  },
+  {
     slug: 'reinvencion-educativa',
     fecha: 'Mayo 2026',
     categoria: 'Ecosistema Educativo',
